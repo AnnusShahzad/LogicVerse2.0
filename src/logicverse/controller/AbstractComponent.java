@@ -10,10 +10,10 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
-public abstract class AbstractComponent {
-    ArrayList<Point> Inputs;    
-    ArrayList<Point> Outputs;
-    ArrayList<Connection> Connections;
+public abstract class AbstractComponent implements Component {
+    protected ArrayList<Point> Inputs;    
+    protected ArrayList<Point> Outputs;
+    protected ArrayList<Connection> Connections;
     /**
      * Name of the Component
      */
