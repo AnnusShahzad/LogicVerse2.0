@@ -16,6 +16,7 @@ public interface Component {
      * This will process the Inputs and Set the Outputs
     */
     public void onExecute();
+    public void execute();
     /**
      * Draws the Component on the Graphics
      */

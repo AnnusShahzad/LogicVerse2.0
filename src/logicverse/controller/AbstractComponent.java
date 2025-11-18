@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public abstract class AbstractComponent implements Component {
     public ArrayList<Point> Inputs;    
     public ArrayList<Point> Outputs;
+    protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
     /**
      * Name of the Component
@@ -22,16 +23,20 @@ public abstract class AbstractComponent implements Component {
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
         Connections = new ArrayList<>();
+        Components = new ArrayList<>();
     }
-    public abstract void onExecute();
     
     public void execute() {
         if(!isConnected()) {
+            System.out.println("Not Connected");
             return;
         }
         onExecute();
-        for(Connection c: Connections) {
-            c.refresh();
+        for(Connection ct: Connections) {
+            ct.refresh();
+        }
+        for(Component cp: Components) {
+            cp.execute();
         }
     }
     

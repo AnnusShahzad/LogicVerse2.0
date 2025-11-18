@@ -11,15 +11,21 @@ package logicverse.controller;
 public class Point {
     String name;
     boolean bit;
-    Integer degree;
+    int degree;
+    Component parent;
     public Point() {
         name = "";
+        parent = null;
     }
-    public Point(String name) {
+    public Point(String name, Component parent) {
         this.name = name;
+        this.parent = parent;
     }
     public boolean get() {
         return bit;
+    }
+    public Component getParent() {
+        return parent;
     }
     public void set(boolean state) {
         bit = state;
@@ -32,5 +38,8 @@ public class Point {
     }
     public boolean isConnected() {
         return degree != 0;
+    }
+    public String toString() {
+        return String.valueOf(bit);
     }
 }

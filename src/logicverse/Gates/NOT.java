@@ -13,12 +13,16 @@ import logicverse.controller.Point;
  * @author Admin
  */
 public class NOT extends AbstractComponent {
+    public NOT() {
+        Inputs.add(new Point("X1", this));
+        Outputs.add(new Point("Y1", this));
+    }
     public void onExecute() {
         // Just because Zohaib Hussain & Ali Ahmad said
-        // boolean inputBit = Inputs.get(0).get();
-        // Outputs.get(0).set(!inputBit);
-        
-        boolean result = true;
+        boolean inputBit = Inputs.get(0).get();
+//         Outputs.get(0).set(!inputBit);
+//        System.out.println("Hello");
+        boolean result = inputBit;
         boolean out = true;
         for(Point p: Inputs) {
             result ^= p.get();
@@ -29,6 +33,7 @@ public class NOT extends AbstractComponent {
         for(Point p: Outputs) {
             p.set(!out);
         }
+//        System.out.println("Called with Input " + inputBit);
     }
     public void draw() {
         
@@ -36,5 +41,6 @@ public class NOT extends AbstractComponent {
     public void addConnection(Point p) {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, p));
+        Components.add(p.getParent());
     }
 }
