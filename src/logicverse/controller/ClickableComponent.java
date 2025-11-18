@@ -9,10 +9,10 @@ package logicverse.controller;
  * @author Admin
  */
 public abstract class ClickableComponent extends AbstractComponent {
-    boolean clicked = false;
+    protected boolean clicked = false;
     protected abstract void onClick();
     public void click() {
-        onClick();
         clicked = !clicked;
+        onClick();
     }
 }
