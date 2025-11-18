@@ -15,12 +15,12 @@ import logicverse.controller.Point;
  */
 public class Switch extends ClickableComponent {
     public Switch() {
-        Outputs.add(new Point("Y1", this));
+        Outputs.add(new Point("Switch X1", this));
     }
     @Override
     protected void onClick() {
         Outputs.get(0).set(clicked);
-        onExecute();
+//        onExecute();
     }
 
     @Override
@@ -38,5 +38,10 @@ public class Switch extends ClickableComponent {
         Point out = Outputs.get(0);
         Connections.add(new Connection(out, p));
         Components.add(p.getParent());
-    }    
+    }
+
+    public String toString() {
+        Point out = Outputs.get(0);
+        return out.toString();
+    }
 }

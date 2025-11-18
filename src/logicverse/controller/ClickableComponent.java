@@ -14,5 +14,6 @@ public abstract class ClickableComponent extends AbstractComponent {
     public void click() {
         clicked = !clicked;
         onClick();
+        execute();
     }
 }

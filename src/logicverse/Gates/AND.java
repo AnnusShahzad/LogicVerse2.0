@@ -17,6 +17,7 @@ public class AND extends AbstractComponent {
         Inputs.add(new Point("X1", this));
         Inputs.add(new Point("X2", this));
         Outputs.add(new Point("Y1", this));
+        internalName = "AND";
     }
     public void onExecute() {
         boolean result = true;
@@ -36,5 +37,10 @@ public class AND extends AbstractComponent {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, p));
         Components.add(p.getParent());
+    }
+    
+    public String toString() {
+        Point in = Outputs.get(0);
+        return in.toString();
     }
 }
