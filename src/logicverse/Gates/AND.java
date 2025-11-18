@@ -13,7 +13,9 @@ import logicverse.controller.Point;
  */
 public class AND extends AbstractComponent {
     public AND() {
-        Inputs.add(new Point()))
+        Inputs.add(new Point("X1"));
+        Inputs.add(new Point("X2"));
+        Outputs.add(new Point("Y1"));
     }
     public void execute() {
         boolean result = true;

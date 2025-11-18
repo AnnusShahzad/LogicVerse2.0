@@ -12,7 +12,7 @@ public class Point {
     String name;
     boolean bit;
     public Point() {
-        name = ""
+        name = "";
     }
     public Point(String name) {
         this.name = name;

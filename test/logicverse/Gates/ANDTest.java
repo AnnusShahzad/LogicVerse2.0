@@ -1,15 +1,11 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
 package logicverse.Gates;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -21,12 +17,22 @@ public class ANDTest {
      */
     @Test
     public void testExecute() {
-//        System.out.println("execute");
         AND instance = new AND();
         // 2 Input AND Gate
-        instance.Inputs.add
-        // instance.execute();
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+//        boolean d[2] = {true, false};
+        for(int i = 0; i < 4; i++) {
+            boolean bit1 = i/2 != 0;
+            boolean bit2 = i%2 != 0;
+            instance.setInputBit(0, bit1);
+            instance.setInputBit(1, bit2);
+            instance.execute();
+            boolean out = instance.Outputs.get(0).get();
+            String msg = String.format("Inputs %s, %s Got %s, Expected %s", bit1, bit2, out, bit1 & bit2);
+            if(i == 3) {
+                assertTrue(msg, out);
+                continue;
+            }
+            assertFalse(msg, out);
+        }
     }    
 }

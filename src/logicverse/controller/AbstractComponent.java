@@ -18,5 +18,24 @@ public abstract class AbstractComponent implements Component {
      * Name of the Component
      */
     String name;
+    public AbstractComponent() {
+        Inputs = new ArrayList<>();
+        Outputs = new ArrayList<>();
+    }
     public abstract void execute();
+    
+    // Just for Testing Purpose, Remove it in Production
+    public void setOutputBit(int i, boolean bit) {
+        if (i >= Outputs.size()) {
+            throw new IndexOutOfBoundsException("There's no " + i + "th Output in the Array");
+        }
+        Outputs.get(i).set(bit);
+    }
+    
+    public void setInputBit(int i, boolean bit) {
+        if (i >= Inputs.size()) {
+            throw new IndexOutOfBoundsException("There's no " + i + "th Input in the Array");
+        }
+        Inputs.get(i).set(bit);
+    }
 }
