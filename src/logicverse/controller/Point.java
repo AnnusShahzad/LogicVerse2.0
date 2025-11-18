@@ -11,6 +11,12 @@ package logicverse.controller;
 public class Point {
     String name;
     boolean bit;
+    public Point() {
+        name = ""
+    }
+    public Point(String name) {
+        this.name = name;
+    }
     public boolean get() {
         return bit;
     }
