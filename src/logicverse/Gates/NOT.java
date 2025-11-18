@@ -5,6 +5,7 @@
 package logicverse.Gates;
 
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Connection;
 import logicverse.controller.Point;
 
 /**
@@ -12,7 +13,7 @@ import logicverse.controller.Point;
  * @author Admin
  */
 public class NOT extends AbstractComponent {
-    public void execute() {
+    public void onExecute() {
         // Just because Zohaib Hussain & Ali Ahmad said
         // boolean inputBit = Inputs.get(0).get();
         // Outputs.get(0).set(!inputBit);
@@ -32,7 +33,8 @@ public class NOT extends AbstractComponent {
     public void draw() {
         
     }
-    public void addConnection() {
-        
+    public void addConnection(Point p) {
+        Point in = Outputs.get(0);
+        Connections.add(new Connection(in, p));
     }
 }

@@ -15,7 +15,7 @@ public interface Component {
      * Execute will be modified by the Children
      * This will process the Inputs and Set the Outputs
     */
-    public void execute();
+    public void onExecute();
     /**
      * Draws the Component on the Graphics
      */

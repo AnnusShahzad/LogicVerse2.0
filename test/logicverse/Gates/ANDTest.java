@@ -25,7 +25,7 @@ public class ANDTest {
             boolean bit2 = i%2 != 0;
             instance.setInputBit(0, bit1);
             instance.setInputBit(1, bit2);
-            instance.execute();
+            instance.onExecute();
             boolean out = instance.Outputs.get(0).get();
             String msg = String.format("Inputs %s, %s Got %s, Expected %s", bit1, bit2, out, bit1 & bit2);
             if(i == 3) {

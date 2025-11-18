@@ -5,6 +5,7 @@
 package logicverse.Gates;
 
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Connection;
 import logicverse.controller.Point;
 
 /**
@@ -17,7 +18,7 @@ public class AND extends AbstractComponent {
         Inputs.add(new Point("X2"));
         Outputs.add(new Point("Y1"));
     }
-    public void execute() {
+    public void onExecute() {
         boolean result = true;
         for(Point p: Inputs) {
             result &= p.get();
@@ -29,7 +30,8 @@ public class AND extends AbstractComponent {
     public void draw() {
         
     }
-    public void addConnection() {
-        
+    public void addConnection(Point p) {
+        Point in = Outputs.get(0);
+        Connections.add(new Connection(in, p));
     }
 }

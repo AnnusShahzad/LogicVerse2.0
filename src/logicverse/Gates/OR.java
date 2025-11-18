@@ -5,6 +5,7 @@
 package logicverse.Gates;
 
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Connection;
 import logicverse.controller.Point;
 
 /**
@@ -12,7 +13,7 @@ import logicverse.controller.Point;
  * @author Admin
  */
 public class OR extends AbstractComponent {
-    public void execute() {
+    public void onExecute() {
         boolean result = true;
         for(Point p: Inputs) {
             result |= p.get();
@@ -24,7 +25,9 @@ public class OR extends AbstractComponent {
     public void draw() {
         
     }
-    public void addConnection() {
-        
+    // COBOL, Pascal, Scala, Julia, FORTRAN, VBA, Go, 
+    public void addConnection(Point p) {
+        Point in = Outputs.get(0);
+        Connections.add(new Connection(in, p));
     }
 }

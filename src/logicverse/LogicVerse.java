@@ -4,7 +4,10 @@
  */
 package logicverse;
 
-import logicverse.view.MainFrame;
+import logicverse.Gates.AND;
+import logicverse.Gates.NOT;
+import logicverse.Gates.OR;
+import logicverse.Gates.Switch;
 
 /**
  *
@@ -18,7 +21,13 @@ public class LogicVerse {
     public static void main(String[] args) {
 //      MainFrame frame = new MainFrame();
 //      frame.setVisible(true);
-        
+//        AND and = new AND();
+//        OR or = new OR();
+//        NOT not = new NOT();
+//        Switch s1 = new Switch();
+//        Switch s2 = new Switch();
+//        
+//        
     }
     
 }
