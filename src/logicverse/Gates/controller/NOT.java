@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logicverse.Gates;
+package logicverse.Gates.controller;
 
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
@@ -35,9 +35,6 @@ public class NOT extends AbstractComponent {
             p.set(!out);
         }
 //        System.out.println("Called with Input " + inputBit);
-    }
-    public void draw() {
-        
     }
     public void addConnection(Point p) {
         Point in = Outputs.get(0);

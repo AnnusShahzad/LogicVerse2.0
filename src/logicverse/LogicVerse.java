@@ -5,9 +5,10 @@
 package logicverse;
 
 import java.util.ArrayList;
-import logicverse.Gates.AND;
-import logicverse.Gates.NOT;
-import logicverse.Gates.Switch;
+import logicverse.Gates.controller.AND;
+import logicverse.Gates.controller.NOT;
+import logicverse.Gates.controller.Switch;
+import logicverse.view.MainFrame;
 
 /**
  *
@@ -19,8 +20,8 @@ public class LogicVerse {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//        MainFrame frame = new MainFrame();
-//        frame.setVisible(true);
+        MainFrame frame = new MainFrame();
+        frame.setVisible(true);
         ArrayList<AND> ands = new ArrayList<>();
         ArrayList<NOT> nots = new ArrayList<>();
         ArrayList<Switch> switches = new ArrayList<>();

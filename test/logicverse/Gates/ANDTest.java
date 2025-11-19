@@ -4,6 +4,7 @@
  */
 package logicverse.Gates;
 
+import logicverse.Gates.controller.AND;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
