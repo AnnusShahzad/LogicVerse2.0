@@ -14,8 +14,8 @@ import logicverse.controller.Point;
 public class NOT extends AbstractComponent {
     public void execute() {
         // Just because Zohaib Hussain & Ali Ahmad said
-//        boolean inputBit = Inputs.get(0).get();
-//        Outputs.get(0).set(!inputBit);
+        // boolean inputBit = Inputs.get(0).get();
+        // Outputs.get(0).set(!inputBit);
         
         boolean result = true;
         boolean out = true;

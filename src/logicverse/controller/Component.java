@@ -24,5 +24,5 @@ public interface Component {
      * Adds Connection to the Component
      * Has 1 Input, 1 Output
      */
-    public void addConnection();
+    public void addConnection(Point c);
 }
