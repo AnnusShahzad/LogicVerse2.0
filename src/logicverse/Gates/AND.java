@@ -14,9 +14,9 @@ import logicverse.controller.Point;
  */
 public class AND extends AbstractComponent {
     public AND() {
-        Inputs.add(new Point("X1"));
-        Inputs.add(new Point("X2"));
-        Outputs.add(new Point("Y1"));
+        Inputs.add(new Point("X1", this));
+        Inputs.add(new Point("X2", this));
+        Outputs.add(new Point("Y1", this));
     }
     public void onExecute() {
         boolean result = true;
@@ -27,11 +27,14 @@ public class AND extends AbstractComponent {
             p.set(result);
         }
     }
+    
     public void draw() {
         
     }
+    
     public void addConnection(Point p) {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, p));
+        Components.add(p.getParent());
     }
 }

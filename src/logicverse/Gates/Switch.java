@@ -15,7 +15,7 @@ import logicverse.controller.Point;
  */
 public class Switch extends ClickableComponent {
     public Switch() {
-        Outputs.add(new Point("Y1"));
+        Outputs.add(new Point("Y1", this));
     }
     @Override
     protected void onClick() {
@@ -37,5 +37,6 @@ public class Switch extends ClickableComponent {
     public void addConnection(Point p) {
         Point out = Outputs.get(0);
         Connections.add(new Connection(out, p));
+        Components.add(p.getParent());
     }    
 }

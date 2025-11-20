@@ -19,4 +19,5 @@ public class Connection {
     public void refresh() {
         Output.set(Input);
     }
+    
 }
