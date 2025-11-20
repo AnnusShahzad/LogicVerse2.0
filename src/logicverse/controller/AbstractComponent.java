@@ -21,8 +21,27 @@ public abstract class AbstractComponent implements Component {
     public AbstractComponent() {
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
+        Connections = new ArrayList<>();
     }
-    public abstract void execute();
+    public abstract void onExecute();
+    
+    public void execute() {
+        if(!isConnected()) {
+            return;
+        }
+        onExecute();
+        for(Connection c: Connections) {
+            c.refresh();
+        }
+    }
+    
+    public boolean isConnected() {
+        for(Point i: Inputs) {
+            if (!i.isConnected())
+                return false;
+        }
+        return true;
+    }
     
     // Just for Testing Purpose, Remove it in Production
     public void setOutputBit(int i, boolean bit) {

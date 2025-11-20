@@ -20,15 +20,12 @@ public class Switch extends ClickableComponent {
     @Override
     protected void onClick() {
         Outputs.get(0).set(clicked);
-        execute();
+        onExecute();
     }
 
     @Override
-    public void execute() {
+    public void onExecute() {
         Outputs.get(0).set(clicked);
-        for(Connection c: Connections) {
-            c.refresh();
-        }
     }
 
     @Override
@@ -37,8 +34,8 @@ public class Switch extends ClickableComponent {
     }
 
     @Override
-    public void addConnection(Point ac) {
+    public void addConnection(Point p) {
         Point out = Outputs.get(0);
-        Connections.add(new Connection(out, ac));
+        Connections.add(new Connection(out, p));
     }    
 }

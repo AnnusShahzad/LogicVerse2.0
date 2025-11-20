@@ -14,6 +14,7 @@ public class Connection {
     public Connection(Point a, Point b) {
         Input = a;
         Output = b;
+        Output.add();
     }
     public void refresh() {
         Output.set(Input);

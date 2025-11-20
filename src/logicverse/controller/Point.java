@@ -11,6 +11,7 @@ package logicverse.controller;
 public class Point {
     String name;
     boolean bit;
+    Integer degree;
     public Point() {
         name = "";
     }
@@ -25,5 +26,11 @@ public class Point {
     }
     public void set(Point point) {
         bit = point.get();
+    }
+    public void add() {
+        degree++;
+    }
+    public boolean isConnected() {
+        return degree != 0;
     }
 }
