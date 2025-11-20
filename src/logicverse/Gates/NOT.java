@@ -16,6 +16,7 @@ public class NOT extends AbstractComponent {
     public NOT() {
         Inputs.add(new Point("X1", this));
         Outputs.add(new Point("Y1", this));
+        internalName = "NOT";
     }
     public void onExecute() {
         // Just because Zohaib Hussain & Ali Ahmad said
@@ -42,5 +43,10 @@ public class NOT extends AbstractComponent {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, p));
         Components.add(p.getParent());
+    }
+    
+    public String toString() {
+        Point in = Outputs.get(0);
+        return in.toString();
     }
 }

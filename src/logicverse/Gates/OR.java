@@ -17,6 +17,7 @@ public class OR extends AbstractComponent {
         Inputs.add(new Point("X1", this));
         Inputs.add(new Point("X2", this));
         Outputs.add(new Point("Y1", this));
+        internalName = "OR";
     }
     public void onExecute() {
         boolean result = false;
@@ -35,5 +36,10 @@ public class OR extends AbstractComponent {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, p));
         Components.add(p.getParent());
+    }
+    
+    public String toString() {
+        Point in = Outputs.get(0);
+        return in.toString();
     }
 }

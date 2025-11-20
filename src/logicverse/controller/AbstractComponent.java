@@ -19,6 +19,7 @@ public abstract class AbstractComponent implements Component {
      * Name of the Component
      */
     String name;
+    protected String internalName;
     public AbstractComponent() {
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
@@ -27,8 +28,9 @@ public abstract class AbstractComponent implements Component {
     }
     
     public void execute() {
-        if(!isConnected()) {
-            System.out.println("Not Connected");
+        Integer missPoint = isConnected();
+        if(missPoint != -1) {
+            System.out.println(internalName + ", Point " + missPoint + " Not Connected");
             return;
         }
         onExecute();
@@ -40,12 +42,12 @@ public abstract class AbstractComponent implements Component {
         }
     }
     
-    public boolean isConnected() {
-        for(Point i: Inputs) {
-            if (!i.isConnected())
-                return false;
+    public int isConnected() {
+        for(int i = 0; i < Inputs.size(); i++) {
+            if (!Inputs.get(i).isConnected())
+                return i;
         }
-        return true;
+        return -1;
     }
     
     // Just for Testing Purpose, Remove it in Production

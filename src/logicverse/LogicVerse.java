@@ -4,9 +4,9 @@
  */
 package logicverse;
 
+import java.util.ArrayList;
 import logicverse.Gates.AND;
 import logicverse.Gates.NOT;
-import logicverse.Gates.OR;
 import logicverse.Gates.Switch;
 
 /**
@@ -19,42 +19,42 @@ public class LogicVerse {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-//      MainFrame frame = new MainFrame();
-//      frame.setVisible(true);
-        AND and = new AND();
-        OR or = new OR();
-        NOT not = new NOT();
-        Switch s1 = new Switch();
-        Switch s2 = new Switch();
+//        MainFrame frame = new MainFrame();
+//        frame.setVisible(true);
+        ArrayList<AND> ands = new ArrayList<>();
+        ArrayList<NOT> nots = new ArrayList<>();
+        ArrayList<Switch> switches = new ArrayList<>();
         
-//        s1.click();
-//        s2.click();
+        // Creating Objects of AND
+        for(int i = 0; i < 4; i++) { ands.add(new AND()); }
+        for(int i = 0; i < 2; i++) { nots.add(new NOT()); }
+        for(int i = 0; i < 2; i++) { switches.add(new Switch()); }
         
-        s1.addConnection(and.Inputs.get(0));
-        s2.addConnection(and.Inputs.get(1));
+        // Now Connecting
+        switches.get(0).addConnection(nots.get(0).Inputs.get(0));
+        switches.get(0).addConnection(ands.get(1).Inputs.get(0));
+        switches.get(0).addConnection(ands.get(3).Inputs.get(1));
+        switches.get(1).addConnection(nots.get(1).Inputs.get(0));
+        switches.get(1).addConnection(ands.get(2).Inputs.get(0));
+        switches.get(1).addConnection(ands.get(3).Inputs.get(0));
         
-        s2.addConnection(or.Inputs.get(1));
-        
-        and.addConnection(or.Inputs.get(0));
-        
-        or.addConnection(not.Inputs.get(0));
-        
-        s1.execute();
-        s2.execute();
-        
-        System.out.println(String.format("AND INPUTS %s, %s OUPUTS %s", and.Inputs.get(0), and.Inputs.get(1), and.Outputs.get(0)));
-        System.out.println(String.format("OR INPUTS %s, %s OUPUTS %s", or.Inputs.get(0), or.Inputs.get(1), or.Outputs.get(0)));
-        
-//        System.out.println()
-//        and.execute();
-//        or.execute();
-//        not.execute();
-        
-//        System.out.println(String.format("Switch 1 Input: %s", s1.Outputs.get(0).get()));
-//        System.out.println(String.format("Switch 2 Input: %s", s2.Outputs.get(0).get()));
-        
-        System.out.println(String.format("Final Output %s", not.Outputs.get(0).get()));
-//        not.addConnection(p);
+        nots.get(0).addConnection(ands.get(0).Inputs.get(0));
+        nots.get(0).addConnection(ands.get(2).Inputs.get(1));
+        nots.get(1).addConnection(ands.get(0).Inputs.get(1));
+        nots.get(1).addConnection(ands.get(1).Inputs.get(1));
+        switches.get(0).execute();
+        switches.get(1).execute();
+        // Now Printing Truth Table
+        for(int i = 0; i < 2; i++) {
+            for(int j = 0; j < 2; j++) {
+                String msg = String.format("%s | %s | %s | %s | %s | %s", switches.get(1), switches.get(0), ands.get(3), ands.get(2), ands.get(1), ands.get(0));
+                System.out.println(msg);
+                switches.get(0).click();
+                switches.get(0).execute();
+                switches.get(1).execute();
+            }
+            switches.get(1).click();
+        }
     }
     
 }
