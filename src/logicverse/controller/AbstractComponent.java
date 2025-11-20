@@ -11,14 +11,12 @@ import java.util.ArrayList;
  * @author Admin
  */
 public abstract class AbstractComponent implements Component {
-    protected ArrayList<Point> Inputs;    
-    protected ArrayList<Point> Outputs;
+    public ArrayList<Point> Inputs;    
+    public ArrayList<Point> Outputs;
     protected ArrayList<Connection> Connections;
     /**
      * Name of the Component
      */
     String name;
-    public void execute() {
-        
-    }
+    public abstract void execute();
 }
