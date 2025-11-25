@@ -11,6 +11,9 @@ package logicverse.controller;
 public abstract class ClickableComponent extends AbstractComponent {
     protected boolean clicked = false;
     protected abstract void onClick();
+    public boolean getState() {
+        return clicked;
+    }
     public void click() {
         clicked = !clicked;
         onClick();

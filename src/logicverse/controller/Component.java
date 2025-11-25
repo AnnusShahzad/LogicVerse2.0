@@ -32,4 +32,13 @@ public interface Component {
      * @param o The Output of this Component to send from
      */
     public void addConnection(Point i, Point o);
+    /**
+     * Performs the Click Event on Component Level, Changing Attributes in `onClick` method
+     */
+    public void click();
+    /**
+     * Gets the Clicked State of an Component
+     * @return Returns True If Component is Clicked, False Otherwise
+     */
+    public boolean getState();
 }
