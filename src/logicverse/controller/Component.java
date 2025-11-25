@@ -12,14 +12,24 @@ package logicverse.controller;
  */
 public interface Component {
     /**
-     * Execute will be modified by the Children
-     * This will process the Inputs and Set the Outputs
+     * The Function that should be override by Children
+     * This is by Default, Called in execute
     */
     public void onExecute();
+    /**
+     * The Actual Execute Function forming composite pattern
+     * DON'T OVERRIDE IT, UNLESS ASKED!
+     */
     public void execute();
     /**
-     * Adds Connection to the Component
-     * Has 1 Input, 1 Output
+     * Adds a New Connection to the component
+     * @param i The Input of the Next Component which is connected to Output of this Component
      */
-    public void addConnection(Point c);
+    public void addConnection(Point i);
+    /**
+     * Adds a New Connection to the component
+     * @param i The Input of the Next Component to Connect to
+     * @param o The Output of this Component to send from
+     */
+    public void addConnection(Point i, Point o);
 }

@@ -5,6 +5,7 @@
 package logicverse.controller;
 
 import java.util.ArrayList;
+import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 
 /**
  *
@@ -63,5 +64,12 @@ public abstract class AbstractComponent implements Component {
             throw new IndexOutOfBoundsException("There's no " + i + "th Input in the Array");
         }
         Inputs.get(i).set(bit);
+    }
+    
+    public void addConnection(Point i) {
+        throw new NullPointerException();
+    }
+    public void addConnection(Point i, Point o) {
+        throw new NullPointerException();
     }
 }
