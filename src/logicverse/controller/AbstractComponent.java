@@ -5,7 +5,7 @@
 package logicverse.controller;
 
 import java.util.ArrayList;
-import jdk.jshell.spi.ExecutionControl.NotImplementedException;
+import logicverse.model.Position;
 
 /**
  *
@@ -14,6 +14,7 @@ import jdk.jshell.spi.ExecutionControl.NotImplementedException;
 public abstract class AbstractComponent implements Component {
     public ArrayList<Point> Inputs;    
     public ArrayList<Point> Outputs;
+    protected Position Location;
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
     
@@ -25,8 +26,18 @@ public abstract class AbstractComponent implements Component {
     public AbstractComponent() {
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
+        Location = new Position();
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
+    }
+    
+    /**
+     * Sets the Component Location on the Screen
+     * @param x X-Axis Position
+     * @param y Y-Axis Position
+     */
+    public void setLocation(int x, int y) {
+        Location.setPosition(x,y);
     }
     
     public void execute() {
