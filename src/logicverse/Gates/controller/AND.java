@@ -29,12 +29,6 @@ public class AND extends AbstractComponent {
         }
     }
     
-    public void addConnection(Point p) {
-        Point in = Outputs.get(0);
-        Connections.add(new Connection(in, p));
-        Components.add(p.getParent());
-    }
-    
     public String toString() {
         Point in = Outputs.get(0);
         return in.toString();
