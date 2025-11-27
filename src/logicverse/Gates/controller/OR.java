@@ -14,10 +14,10 @@ import logicverse.controller.Point;
  */
 public class OR extends AbstractComponent {
     public OR() {
+        internalName = "OR";
         Inputs.add(new Point("X1", this));
         Inputs.add(new Point("X2", this));
         Outputs.add(new Point("Y1", this));
-        internalName = "OR";
     }
     public void onExecute() {
         boolean result = false;
