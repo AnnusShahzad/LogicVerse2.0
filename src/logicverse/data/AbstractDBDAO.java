@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author zohaib
  */
-public abstract class AbstractDAO implements IDAO {
+public abstract class AbstractDBDAO implements IDAO {
     private static Connection conn;
     protected static Connection getConnection()
             throws SQLException
