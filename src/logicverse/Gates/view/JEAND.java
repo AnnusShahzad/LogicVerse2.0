@@ -17,25 +17,18 @@ import logicverse.Gates.controller.AND;
  * @author Admin
  */
 public class JEAND extends JEComponent {
-    // --- Define Gate Size and Center ---
-    int w = 70; // Gate width
-    int h = 90; // Gate height
-
+    final int d = 25;
+    final int l = 20;
+    final int r = 10;
+    final int disp_x = 6;
+    final int disp_y = 0;
     public JEAND() {
         super(new AND());
     }
 
     @Override
     public Dimension getPreferredSize() {
-        // Calculate total width needed: input space + gate width + output space
-        int totalWidth = 60 + w + 30; // input_line(30) + w + output_line(30)
-        int totalHeight = h + 10; // h + vertical padding
-        return new Dimension(totalWidth, totalHeight);
-    }
-
-    @Override
-    public Dimension getMinimumSize() {
-        return getPreferredSize();
+        return new Dimension(111, 111);
     }
 
     public void paintComponent(Graphics g) {
@@ -45,39 +38,17 @@ public class JEAND extends JEComponent {
     }
 
     public void draw(Graphics2D obj) {
-        // Calculate center of the drawing area
-        int x_center = getWidth() / 2;
-        int y_center = getHeight() / 2;
-
-        // Define the origin point (top-left corner) for the gate's bounding box
-        int x = x_center - w / 2;
-        int y = y_center - h / 2;
-
-        // --- AND Gate Shape ---
-        // Draw two lines: left vertical + curved right side
-        // No top or bottom horizontal lines
-
-        // Left vertical line only
-        obj.drawLine(x, y, x, y + h);
-        // upper horizontal line only
-        obj.drawLine(x, y, x + w / 2, y);
-
-        // lower horizontal line only
-        obj.drawLine(x, y + h, x + w / 2, y + h);
-        // Curved right side (semi-circle)
-        int curveRadius = h / 2;
-        obj.drawArc(x + w - curveRadius - 35, y, curveRadius * 2, h, -90, 180);
-
-        // --- Input and Output Lines ---
-        int line_length = 30;
-
-        // Input line 1 (Top)
-        obj.drawLine(x - line_length - 13, y + h / 4, x, y + h / 4);
-
-        // Input line 2 (Bottom)
-        obj.drawLine(x - line_length - 13, y + 3 * h / 4, x, y + 3 * h / 4);
-
-        // Output line (from the center right)
-        obj.drawLine(x + w + 13, y_center, x + w + line_length + 15, y_center);
+        int w = getWidth();
+        int h = getHeight();
+        int cx = w/2;
+        int cy = h/2;
+        //obj.drawRect(0, 0, 110, 105);
+        obj.drawLine(disp_x, 2*h/5, disp_x+l, 2*h/5); // Input 1
+        obj.drawLine(disp_x, 3*h/5, disp_x+l, 3*h/5); // Input 2
+        obj.drawLine(disp_x+l, 5*h/20, disp_x+l, 15*h/20); // Bottom of AND Bell
+        obj.drawLine(disp_x+l, 5*h/20, disp_x+l+27, 5*h/20); // Top Bar 
+        obj.drawLine(disp_x+l, 15*h/20, disp_x+l+27, 15*h/20); // Top Bar 
+        obj.drawArc(disp_x+l, 5*h/20, l+35, l+35, -90, 180); // Bell TOp Curve
+        obj.drawLine(disp_x+l+55, cy, disp_x+l+55+l, cy); // Bell Output
     }
 }
