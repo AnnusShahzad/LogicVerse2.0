@@ -5,27 +5,34 @@
 package logicverse.Gates.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.NOT;
 import logicverse.Gates.model.JEComponent;
+import logicverse.Gates.model.JEDraggableComponent;
 
 /**
  *
  * @author Admin
  */
-public class JENOT extends JEComponent {
+public class JENOT extends JEDraggableComponent {
     final int d = 25;
     final int l = 50;
-    final int r = 5;
+    final int r = 10;
     
     public JENOT() {
         super(new NOT());
     }
     
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(111, 111);
+    }
+    
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.red);
+        g.setColor(Color.black);
         draw((Graphics2D)g);
     }
     
@@ -42,7 +49,7 @@ public class JENOT extends JEComponent {
         // Output Bar Circle haan aik minute
         obj.drawOval(x+d, y-r/2, r, r);
         // Output Bar
-        obj.drawLine(x+d+r, y, x+d+2*r+l/2-l/5, y);
+        obj.drawLine(x+d+r, y, x+d+2*r+l/12, y);
         // Input Bar
         obj.drawLine(x-d-l/2, y, x-d, y);
     }

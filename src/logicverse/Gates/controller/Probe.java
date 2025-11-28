@@ -16,7 +16,10 @@ import logicverse.controller.Point;
 public class Probe extends AbstractComponent {
     public Probe() {
         internalName = "Binary Probe";
+        shortName = "PRB";
+        name = shortName + getCount(this.getClass());
         Inputs.add(new Point("X1", this));
+//        incrementCount(this.getClass());
     }
     public void onExecute() {
         // do Nothing

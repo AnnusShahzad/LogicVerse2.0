@@ -10,19 +10,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.Switch;
 import logicverse.Gates.model.JEClickableComponent;
+import logicverse.Gates.model.JEDraggableComponent;
 
 /**
  *
  * @author Admin
  */
-public class JESwitch extends JEClickableComponent {
+public class JESwitch extends JEDraggableComponent {
     final int i = 10;
     final int d = 10;
     final int output = 20;
     
     public JESwitch() {
         super(new Switch());
-        
     }
     
     public Dimension getPreferredSize() {

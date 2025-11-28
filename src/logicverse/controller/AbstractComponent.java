@@ -5,6 +5,8 @@
 package logicverse.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import logicverse.model.Position;
 
 /**
@@ -17,10 +19,12 @@ public abstract class AbstractComponent implements Component {
     protected Position Location;
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
+    protected static final Map<Class<?>, Integer> counters = new HashMap<>();
     /**
      * Name of the Component
      */
-    String name;
+    protected String name;
+    protected String shortName;
     protected String internalName;
     public AbstractComponent() {
         Inputs = new ArrayList<>();
@@ -29,7 +33,24 @@ public abstract class AbstractComponent implements Component {
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
     }
-    
+    public void incrementCount() {
+        counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
+    }
+    protected static int getCount(Class<?> cls) {
+        return counters.getOrDefault(cls, 0);
+    }
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public String getInternalName() {
+        return internalName;
+    }
     /**
      * Sets the Component Location on the Screen
      * @param x X-Axis Position

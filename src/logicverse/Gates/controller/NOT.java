@@ -15,8 +15,11 @@ import logicverse.controller.Point;
 public class NOT extends AbstractComponent {
     public NOT() {
         internalName = "NOT";
+        shortName = internalName;
+        name = shortName + getCount(this.getClass());
         Inputs.add(new Point("X1", this));
         Outputs.add(new Point("Y1", this));
+//        incrementCount(this.getClass());
     }
     public void onExecute() {
         // Just because Zohaib Hussain & Ali Ahmad said
