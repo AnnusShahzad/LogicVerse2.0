@@ -4,9 +4,9 @@
  */
 package logicverse;
 
+import java.util.ArrayList;
 import logicverse.Gates.controller.AND;
 import logicverse.Gates.controller.NOT;
-import logicverse.Gates.controller.OR;
 import logicverse.Gates.controller.Switch;
 import logicverse.view.MainFrame;
 

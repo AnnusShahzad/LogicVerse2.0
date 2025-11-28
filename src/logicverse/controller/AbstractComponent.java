@@ -5,8 +5,11 @@
 package logicverse.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import logicverse.model.Position;
 
 /**
@@ -51,6 +54,25 @@ public abstract class AbstractComponent implements Component {
     public String getInternalName() {
         return internalName;
     }
+    public List<Point> getFreeInputs() {
+        Set<Point> points = Connections.stream().map(it -> it.Input).filter(it -> it.degree > 0).collect(Collectors.toSet());
+        return points.stream().toList();
+    }
+    /**
+     * Returns true, If there is any Output Point of a Component
+     * @return True, If has an Output Point. False, Otherwise
+    */
+    public boolean hasOutputs() {
+        return Outputs.size() > 0;
+    }
+    
+    public boolean hasFreeInputs() {
+        return getFreeInputs().size() > 0;
+    }
+    public List<Point> getOutputs() {
+        return this.Outputs;
+    }
+    
     /**
      * Sets the Component Location on the Screen
      * @param x X-Axis Position

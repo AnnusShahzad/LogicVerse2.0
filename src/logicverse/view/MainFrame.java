@@ -5,6 +5,7 @@
 package logicverse.view;
 
 import javax.swing.JOptionPane;
+import logicverse.Gates.controller.Circuit;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.view.JEAND;
 import logicverse.Gates.view.JENOT;
@@ -20,12 +21,14 @@ public class MainFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private JEComponent selectedComponent;
+    private Circuit circuit;
     
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         selectedComponent = null;
+        circuit = new Circuit();
         initComponents();
     }
 
@@ -45,6 +48,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         componentList = new javax.swing.JList<>();
+        ConnectComponentBtn = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -81,6 +85,14 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(componentList);
 
+        ConnectComponentBtn.setText("Connect");
+        ConnectComponentBtn.setDoubleBuffered(true);
+        ConnectComponentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConnectComponentBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -95,7 +107,8 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel2)
                                 .addComponent(jScrollPane1)
-                                .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -112,6 +125,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addComponentBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ConnectComponentBtn)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -171,8 +186,12 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         String componentInternalName = selectedComponent.component.getInternalName();
-        new AddComponentInfo(this, mainPanel, componentInternalName, true).setVisible(true);
+        new AddComponentInfo(this, circuit, mainPanel, componentInternalName, true).setVisible(true);
     }//GEN-LAST:event_addComponentBtnActionPerformed
+
+    private void ConnectComponentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectComponentBtnActionPerformed
+        new ConnectComponent(this, circuit, true).setVisible(true);
+    }//GEN-LAST:event_ConnectComponentBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +219,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ConnectComponentBtn;
     private javax.swing.JButton addComponentBtn;
     private javax.swing.JList<String> componentList;
     private javax.swing.JPanel componentPreview;

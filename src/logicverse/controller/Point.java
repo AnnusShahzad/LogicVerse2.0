@@ -40,6 +40,6 @@ public class Point {
         return degree != 0;
     }
     public String toString() {
-        return String.valueOf(bit);
+        return name;
     }
 }
