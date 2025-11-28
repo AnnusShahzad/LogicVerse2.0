@@ -52,6 +52,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
             default:
                 break;
         }
+        CompName.setText(this.component.component.getName());
     }
 
     /**
@@ -152,6 +153,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         component.setBounds(x, y, w, h);
         jpanel.revalidate();
         jpanel.repaint();
+        component.component.incrementCount();
         dispose();
     }//GEN-LAST:event_addCompToPanelActionPerformed
 
