@@ -43,7 +43,7 @@ public class PointDBDAO extends AbstractDBDAO{
         int count = 0;
         try{
             Connection conn = getConnection();
-            PreparedStatement stmt = deleteStatement(conn,params.get("Id"));
+            PreparedStatement stmt = deleteStatement(conn,params.get("Pid"));
             count = stmt.executeUpdate();            
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
@@ -59,11 +59,11 @@ public class PointDBDAO extends AbstractDBDAO{
         Hashtable<String,String> data = new Hashtable<String,String>();
         try{            
             Connection conn = getConnection();
-            PreparedStatement stmt = selectSingleStatement(conn,params.get("Id"));
+            PreparedStatement stmt = selectSingleStatement(conn,params.get("Pid"));
             ResultSet rs = stmt.executeQuery();
                     
             while (rs.next()){                
-                data.put("Id", rs.getString("Id"));
+                data.put("Pid", rs.getString("Pid"));
                 data.put("Name", rs.getString("Name"));              
             }        
         } catch(SQLException ex){
@@ -78,15 +78,19 @@ public class PointDBDAO extends AbstractDBDAO{
     public ArrayList<Hashtable<String,String>> loadAll(Hashtable<String, String> params){
         ArrayList<Hashtable<String,String>> data = new ArrayList<>();
         
-        String query = "select Id,Name from Project";
+        String query = "select * from Point";
         try {
           Connection conn = getConnection();
           Statement stmt = conn.createStatement();
           ResultSet rs = stmt.executeQuery(query);
           while (rs.next()) {
             Hashtable<String,String> o = new Hashtable<>();
-            o.put("Id",rs.getString("Id"));
+            o.put("Pid",rs.getString("Pid"));
+            o.put("Cid",rs.getString("Cid"));
             o.put("Name",rs.getString("Name"));
+            o.put("bit",rs.getString("bit"));
+            o.put("degree",rs.getString("degree"));
+            o.put("type",rs.getString("type"));
             
             data.add(o);
           }
@@ -100,31 +104,39 @@ public class PointDBDAO extends AbstractDBDAO{
     }
     
     private PreparedStatement updateStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "update Project set Name = ? where Id = ?";
+        String query = "update Point set Cid = ?,Name = ?,bit = ?,degree = ?,type = ? where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
-        stmt.setString(1,data.get("Name"));
-        stmt.setString(2,data.get("Id"));
+        stmt.setString(1,data.get("Cid"));
+        stmt.setString(2,data.get("Nmae"));
+        stmt.setString(3,data.get("bit"));
+        stmt.setString(4,data.get("degree"));
+        stmt.setString(5,data.get("type"));
+        stmt.setString(6,data.get("Pid"));
         return stmt;
     }
     private PreparedStatement insertStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "insert into Project(Id,Name) values(?,?);";
+        String query = "insert into Point(Pid,Cid,Name,bit,degree,type) values(?,?,?,?,?,?);";
         PreparedStatement stmt = conn.prepareStatement(query);
         
-        stmt.setString(1,data.get("Id"));
-        stmt.setString(2,data.get("Name"));
+        stmt.setString(1,data.get("Pid"));
+        stmt.setString(2,data.get("Cid"));
+        stmt.setString(3,data.get("Name"));
+        stmt.setString(4,data.get("bit"));
+        stmt.setString(5,data.get("degree"));
+        stmt.setString(6,data.get("tupe"));
         
         return stmt;
     }
     
     private PreparedStatement selectSingleStatement(Connection conn,String id) throws SQLException{
-        String query = "select Id,Name from Project where Id = ?";
+        String query = "select Cid,Name,bit,degree,type from Point where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
         stmt.setString(1,id);
         return stmt;
     }
     
     private PreparedStatement deleteStatement(Connection conn,String id) throws SQLException{
-        String query = "delete from Project where Id = ?";
+        String query = "delete from Point where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
         stmt.setString(1,id);
         return stmt;

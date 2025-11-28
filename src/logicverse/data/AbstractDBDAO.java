@@ -19,7 +19,7 @@ public abstract class AbstractDBDAO implements IDAO {
     {           
         
         if(conn == null){
-            conn = DriverManager.getConnection("jdbc:sqlite:DB/Log.db"); 
+            conn = DriverManager.getConnection("jdbc:sqlite:db/LogicVerseDB.db"); 
         }
         return conn;
             
