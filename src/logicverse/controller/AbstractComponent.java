@@ -29,7 +29,18 @@ public abstract class AbstractComponent implements Component {
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
     }
-    
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public String getInternalName() {
+        return internalName;
+    }
     /**
      * Sets the Component Location on the Screen
      * @param x X-Axis Position
