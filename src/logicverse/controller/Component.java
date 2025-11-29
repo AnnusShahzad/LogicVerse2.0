@@ -18,10 +18,6 @@ public interface Component {
     public void onExecute();
     public void execute();
     /**
-     * Draws the Component on the Graphics
-     */
-    public void draw();
-    /**
      * Adds Connection to the Component
      * Has 1 Input, 1 Output
      */

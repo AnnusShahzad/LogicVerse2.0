@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logicverse.Gates;
+package logicverse.Gates.controller;
 
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
@@ -27,10 +27,6 @@ public class AND extends AbstractComponent {
         for(Point p: Outputs) {
             p.set(result);
         }
-    }
-    
-    public void draw() {
-        
     }
     
     public void addConnection(Point p) {
