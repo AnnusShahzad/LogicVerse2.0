@@ -43,13 +43,22 @@ public class Point {
      * Component which has this Point
      */
     Component parent;
-  
+    /**
+     * Parameterized Constructor with Custom PointID
+     * @param PointId Point ID
+     */
     public Point(String PointId) {
         Pid = PointId;
         load();
     }
-    
-  
+    /**
+     * 
+     * @param Pid Unique Point ID
+     * @param name Point Name
+     * @param bit Point Bit Value
+     * @param degree Count of Components Point is Connected with
+     * @param parent Component having Point
+     */
     public Point(String Pid, String name, boolean bit, int degree, Component parent) {
         this.Pid = Pid;
         this.name = name;
@@ -58,15 +67,27 @@ public class Point {
         this.parent = parent;
     }
     
+    /**
+     * Parameterized Constructor
+     * @param name Point Name
+     * @param parent Component having Point
+     */
     public Point(String name, Component parent) {
         this.Pid = UUID.randomUUID().toString();
         this.name = name;
         this.parent = parent;
     }
-
+    /**
+     * Gets the Unique Point ID
+     * @return Point ID
+     */
     public String getPid() {
         return Pid;
     }
+    /**
+     * Gets the Boolean Value on the Point
+     * @return Point Value
+     */
     public boolean get() {
         return bit;
     }
