@@ -5,11 +5,15 @@
 package logicverse.Gates.controller;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Component;
 import logicverse.controller.Point;
+import logicverse.data.CircuitDBDAO;
+import logicverse.data.IDAO;
 
 
 /**
@@ -31,14 +35,24 @@ public class Circuit {
      * USAGE: Helps the User know the name of the Circuit
      */
     private String Name;
+    private static final IDAO dao = new CircuitDBDAO();
 
     /**
      * Default Constructor
      * Initializes the Circuit with Default Values and Initializes Arrays
      */
     public Circuit() {
+        ID = UUID.randomUUID().toString();
         Components = new ArrayList<>();
     }
+
+    public Circuit(String ID, String Name) {
+        this.ID = ID;
+        this.Name = Name;
+        Components = new ArrayList<>();
+    }
+    
+    
     
     /**
      * Gets the List of Circuit Components
@@ -98,5 +112,40 @@ public class Circuit {
      */
     public void setName(String Name) {
         this.Name = Name;
+    }
+        // dao funcitons
+    /**
+     * Delete a Circuit
+     * @return Boolean
+     */
+    public boolean delete(){
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("CIRid", this.ID);
+        return dao.delete(params);
+    }
+    /**
+     * Save a Circuit
+     * @return Boolean
+     */
+    public boolean save(){
+        Hashtable<String,String> data = new Hashtable<>();
+        data.put("CIRid",this.ID);
+        data.put("Name",this.Name);
+        
+        
+        return dao.save(data);
+    }
+    /**
+     * Get all Circuits
+     * @return ArrayList of Circuits
+     */
+    public static ArrayList<Circuit> loadAll(){
+        ArrayList<Circuit> res = new ArrayList<>();
+        Hashtable<String,String> params = new Hashtable<>();
+        ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
+        for(Hashtable<String,String> d : data){
+            res.add(new Circuit(d.get("CIRid"),d.get("Name")));
+        }
+        return res;
     }
 }

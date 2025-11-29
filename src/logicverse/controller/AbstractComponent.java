@@ -7,9 +7,14 @@ package logicverse.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import logicverse.Gates.controller.AND;
+import logicverse.data.ComponentDBDAO;
+import logicverse.data.IDAO;
 import logicverse.model.Position;
 
 /**
@@ -23,13 +28,23 @@ public abstract class AbstractComponent implements Component {
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
     protected static final Map<Class<?>, Integer> counters = new HashMap<>();
+    private static final IDAO dao = new ComponentDBDAO();
     /**
      * Name of the Component
      */
+    protected String Cid;
     protected String name;
     protected String shortName;
     protected String internalName;
     public AbstractComponent() {
+        Cid = UUID.randomUUID().toString();
+        Inputs = new ArrayList<>();
+        Outputs = new ArrayList<>();
+        Location = new Position();
+        Connections = new ArrayList<>();
+        Components = new ArrayList<>();
+    }
+    public AbstractComponent(String Cid){
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
         Location = new Position();
@@ -38,6 +53,10 @@ public abstract class AbstractComponent implements Component {
     }
     public void incrementCount() {
         counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
+    }
+
+    public String getCid() {
+        return Cid;
     }
     protected static int getCount(Class<?> cls) {
         return counters.getOrDefault(cls, 0);
@@ -134,4 +153,88 @@ public abstract class AbstractComponent implements Component {
         Connections.add(new Connection(i, o));
         Components.add(o.getParent());
     }
+    /**
+     * search for a Point in the output Points of component
+     * @param pointId
+     * @return Point
+     */
+    public Point getOutputPoint(String pointId){
+        for(Point o: this.Outputs){
+            if(o.getPid().equals(pointId)){
+                return o;
+            }
+        }
+        return null;
+    }
+    /**
+     * search for a point in the input Points of Component
+     * @param pointId
+     * @return Point
+     */
+    public Point getInputPoint(String pointId){
+        for(Point p: this.Inputs){
+            if(p.getPid().equals(pointId)){
+                return p;
+            }
+        }
+        return null;
+    }
+     
+    /**
+     * search for a point in the input Points of all associated components
+     * @param pointId
+     * @return Point
+     */
+    public Point getInputPointFromACs(String pointId){
+        for(Component c :  this.Components){
+            AbstractComponent ac = (AbstractComponent)c;
+            Point inputPoint = ac.getInputPoint(pointId);
+            if(inputPoint != null)
+                return inputPoint;
+        }
+        return null;
+    }
+    
+    
+    // dao funcitons
+    /**
+     * Delete a Component
+     * @return Boolean
+     */
+    public boolean delete(){
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("Cid", this.Cid);
+        return dao.delete(params);
+    }
+    /**
+     * Save a Componnet
+     * @param type type of point of component (Input,Output)
+     * @return Boolean
+     */
+    public boolean save(){
+        Hashtable<String,String> data = new Hashtable<>();
+        data.put("Cid",this.Cid);
+        data.put("Name",this.name);
+        data.put("internalName",this.internalName);
+        data.put("PosX",String.valueOf(this.Location.getX()));
+        data.put("PosY",String.valueOf(this.Location.getY()));
+        
+        return dao.save(data);
+    }
+    /**
+     * Get all Componnets inside a Circuit
+     * @param circuitId CircuitId
+     * @return ArrayList of p
+     */
+    public static ArrayList<Component> loadAll(String circuitId){
+        ArrayList<Component> res = new ArrayList<>();
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("Cid", circuitId);
+        ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
+        for(Hashtable<String,String> d : data){
+            res.add(new AND());
+        }
+        return res;
+    }
+     
 }
