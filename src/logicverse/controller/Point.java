@@ -61,7 +61,7 @@ public class Point {
      */
     public Point(String Pid, String name, boolean bit, int degree, Component parent) {
         this.Pid = Pid;
-        this.name = name;
+        this.name = parent.getName() + name;
         this.bit = bit;
         this.degree = degree;
         this.parent = parent;
@@ -74,7 +74,7 @@ public class Point {
      */
     public Point(String name, Component parent) {
         this.Pid = UUID.randomUUID().toString();
-        this.name = name;
+        this.name = parent.getName() + name;
         this.parent = parent;
     }
     /**
@@ -132,6 +132,7 @@ public class Point {
      * @return 
      */
     public String toString() {
+//        return String.valueOf(bit);
         return name;
     }
     
@@ -180,7 +181,7 @@ public class Point {
         return dao.save(data);
     }
     /**
-     * Get all Point associated with a Componenet
+     * Get all Point associated with a Component
      * @param parent Parent component
      * @param Type of points (Input or Output)
      * @return ArrayList of p
@@ -193,11 +194,11 @@ public class Point {
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
             Point p = new Point(
-                    d.get("Pid"),
-                    d.get("Name"),
-                    (Integer.valueOf(d.get("bit"))== 1)?true:false,
-                    Integer.valueOf(d.get("degree")),
-                    parent
+                d.get("Pid"),
+                d.get("Name"),
+                (Integer.valueOf(d.get("bit"))== 1)?true:false,
+                Integer.valueOf(d.get("degree")),
+                parent
             );
             res.add(p);
         }
