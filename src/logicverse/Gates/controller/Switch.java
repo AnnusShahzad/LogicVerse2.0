@@ -18,7 +18,7 @@ public class Switch extends ClickableComponent {
         internalName = "Binary Switch";
         shortName = "SW";
         name = shortName + getCount(this.getClass());
-        Outputs.add(new Point("Switch X1", this));
+        Outputs.add(new Point("SWX1", this));
 //        incrementCount(this.getClass());
     }
     @Override
@@ -33,7 +33,7 @@ public class Switch extends ClickableComponent {
     }
 
     public String toString() {
-        Point out = Outputs.get(0);
-        return out.toString();
+//        Point out = Outputs.get(0);
+        return name;
     }
 }

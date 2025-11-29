@@ -41,7 +41,7 @@ public class NOT extends AbstractComponent {
     }
     
     public String toString() {
-        Point in = Outputs.get(0);
-        return in.toString();
+//        Point in = Outputs.get(0);
+        return name;
     }
 }

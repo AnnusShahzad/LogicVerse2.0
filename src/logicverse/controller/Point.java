@@ -11,21 +11,45 @@ import logicverse.data.IDAO;
 import logicverse.data.PointDBDAO;
 
 /**
- *
+ * Points used by Electrical Components (Input/Output)
+ * Responsible for Fetching and Sending Bits on Path
  * @author Admin
  */
 public class Point {
+    /**
+     * Point Unique ID
+     * Useful 
+     */
     String Pid;
+    /**
+     * Point Name
+     * Useful for Debugging
+     */
     String name;
+    /**
+     * The Boolean bit it has
+     */
     boolean bit;
+    /**
+     * Number of Other Points Connected
+     * 0, If the Point is free (Not Connected).
+     */
     int degree;
+    /**
+     * DAO Responsible for Managing State of Point
+     */
     private static final IDAO dao =  new PointDBDAO();
+    /**
+     * Component which has this Point
+     */
     Component parent;
+  
     public Point(String PointId) {
         Pid = PointId;
         load();
     }
-
+    
+  
     public Point(String Pid, String name, boolean bit, int degree, Component parent) {
         this.Pid = Pid;
         this.name = name;
@@ -46,21 +70,46 @@ public class Point {
     public boolean get() {
         return bit;
     }
+    /**
+     * Gets the Component having Point
+     * @return Component Object
+     */
     public Component getParent() {
         return parent;
     }
+    /**
+     * Sets the Point bit (Boolean)
+     * @param state new bit
+     */
     public void set(boolean state) {
         bit = state;
     }
+    /**
+     * Sets the Point bit from another Point
+     * @param point Another Point to fetch bit from
+     */
     public void set(Point point) {
         bit = point.get();
     }
+    /**
+     * Responsible for Adding the Point Degree
+     */
     public void add() {
         degree++;
     }
+    /**
+     * Gets whether a Point is Connected or not
+     * True, If connected. False otherwise
+     * @return Point Connection State
+     */
     public boolean isConnected() {
         return degree != 0;
     }
+    /**
+     * Default toString Method
+     * Used for Accessibility
+     * @return 
+     */
     public String toString() {
         return name;
     }
