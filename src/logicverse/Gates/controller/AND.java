@@ -4,9 +4,11 @@
  */
 package logicverse.Gates.controller;
 
+import java.util.ArrayList;
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
 import logicverse.controller.Point;
+import logicverse.model.Position;
 
 /**
  *
@@ -22,6 +24,16 @@ public class AND extends AbstractComponent {
         Outputs.add(new Point("Y1", this));
 //        incrementCount(this.getClass());
     }
+ 
+
+    public AND(Position Location, String Cid, String name, String internalName) {
+        super( Location, Cid, name, internalName);
+        this.shortName = internalName;
+    }
+    
+    
+    
+    
     public void onExecute() {
         boolean result = true;
         for(Point p: Inputs) {

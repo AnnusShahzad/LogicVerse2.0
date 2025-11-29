@@ -13,6 +13,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.Gates.controller.AND;
+import logicverse.Gates.controller.NOT;
+import logicverse.Gates.controller.OR;
+import logicverse.Gates.controller.Switch;
 import logicverse.data.ComponentDBDAO;
 import logicverse.data.IDAO;
 import logicverse.model.Position;
@@ -51,6 +54,16 @@ public abstract class AbstractComponent implements Component {
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
     }
+
+    public AbstractComponent( Position Location, String Cid, String name, String internalName) {
+        this.Inputs = Point.loadAll(this, "Input");
+        this.Outputs = Point.loadAll(this, "Output");
+        this.Location = Location;
+        this.Cid = Cid;
+        this.name = name;
+        this.internalName = internalName;
+    }
+    
     public void incrementCount() {
         counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
     }
@@ -232,7 +245,26 @@ public abstract class AbstractComponent implements Component {
         params.put("Cid", circuitId);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
-            res.add(new AND());
+            Component c;
+            Position loc = new Position(Integer.valueOf(d.get("PosX")),Integer.valueOf(d.get("PosY")));
+            switch(d.get("internalName")){
+                case "AND":
+                    // Position Location, String Cid, String name, String internalName
+                    c =  new AND(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "OR":
+                    c =  new OR(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "NOT":
+                    c =  new NOT(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "Binary Switch":
+                    c =  new Switch(loc,d.get("Cid"),d.get("Name"),d.get("internalName"),d.get("clicked").equals(1));
+                    break;
+                default:
+                    c =  new AND(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    
+            }
         }
         return res;
     }
