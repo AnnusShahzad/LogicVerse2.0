@@ -16,6 +16,7 @@ public class Point {
     public Point() {
         name = "";
         parent = null;
+        degree = 0;
     }
     public Point(String name, Component parent) {
         this.name = name;

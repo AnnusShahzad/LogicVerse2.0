@@ -4,9 +4,12 @@
  */
 package logicverse.view;
 
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import logicverse.Gates.controller.Circuit;
+import logicverse.controller.AbstractComponent;
 import logicverse.controller.Component;
+import logicverse.controller.Point;
 
 /**
  *
@@ -15,7 +18,7 @@ import logicverse.controller.Component;
 public class ConnectComponent extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ConnectComponent.class.getName());
-
+    
     /**
      * Creates new form ConnectComponent
      */
@@ -24,6 +27,10 @@ public class ConnectComponent extends javax.swing.JDialog {
         initComponents();
         OutComps.setModel(new DefaultComboBoxModel<Component>(circuit.getComponentWithOutputs().toArray(new Component[0])));
         InComps.setModel(new DefaultComboBoxModel<Component>(circuit.getComponentWithFreeInputs().toArray(new Component[0])));
+        if(OutComps.getItemCount() > 0)
+            OutComps.setSelectedIndex(0);
+        if(InComps.getItemCount() > 0)
+            InComps.setSelectedIndex(0);
     }
 
     /**
@@ -65,6 +72,18 @@ public class ConnectComponent extends javax.swing.JDialog {
         AddConnBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddConnBtnActionPerformed(evt);
+            }
+        });
+
+        OutComps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OutCompsActionPerformed(evt);
+            }
+        });
+
+        InComps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InCompsActionPerformed(evt);
             }
         });
 
@@ -126,8 +145,23 @@ public class ConnectComponent extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddConnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddConnBtnActionPerformed
-        
+        Component c = (Component)InComps.getSelectedItem();
+        Point i = (Point)OutCompPoints.getSelectedItem();
+        Point o = (Point)InCompPoints.getSelectedItem();
+        c.addConnection(i, o);
+        dispose();
     }//GEN-LAST:event_AddConnBtnActionPerformed
+
+    private void OutCompsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OutCompsActionPerformed
+        List<Point> temp = ((AbstractComponent)OutComps.getSelectedItem()).getOutputs();
+        System.out.println("Outputs Points = " + temp.size());
+        OutCompPoints.setModel(new DefaultComboBoxModel<Point>(temp.toArray(new Point[0])));
+    }//GEN-LAST:event_OutCompsActionPerformed
+
+    private void InCompsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InCompsActionPerformed
+        List<Point> temp = ((AbstractComponent)InComps.getSelectedItem()).getFreeInputs();
+        System.out.println("Free Inputs = " + temp.size());
+        InCompPoints.setModel(new DefaultComboBoxModel<Point>(temp.toArray(new Point[0])));    }//GEN-LAST:event_InCompsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,9 +202,9 @@ public class ConnectComponent extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddConnBtn;
-    private javax.swing.JComboBox<String> InCompPoints;
+    private javax.swing.JComboBox<Point> InCompPoints;
     private javax.swing.JComboBox<Component> InComps;
-    private javax.swing.JComboBox<String> OutCompPoints;
+    private javax.swing.JComboBox<Point> OutCompPoints;
     private javax.swing.JComboBox<Component> OutComps;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
