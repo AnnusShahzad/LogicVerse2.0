@@ -63,8 +63,13 @@ public class PointDBDAO extends AbstractDBDAO{
             ResultSet rs = stmt.executeQuery();
                     
             while (rs.next()){                
-                data.put("Pid", rs.getString("Pid"));
-                data.put("Name", rs.getString("Name"));              
+                data.put("Pid",rs.getString("Pid"));
+                data.put("Cid",rs.getString("Cid"));
+                data.put("Name",rs.getString("Name"));
+                data.put("bit",rs.getString("bit"));
+                data.put("degree",rs.getString("degree"));
+                data.put("type",rs.getString("type"));
+                                
             }        
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
@@ -78,11 +83,14 @@ public class PointDBDAO extends AbstractDBDAO{
     public ArrayList<Hashtable<String,String>> loadAll(Hashtable<String, String> params){
         ArrayList<Hashtable<String,String>> data = new ArrayList<>();
         
-        String query = "select * from Point";
+        String query = "select * from Point where Cid = ? and type = ?;";
         try {
           Connection conn = getConnection();
-          Statement stmt = conn.createStatement();
-          ResultSet rs = stmt.executeQuery(query);
+            PreparedStatement stmt = conn.prepareStatement(query);        
+            stmt.setString(1,params.get("Cid"));
+            stmt.setString(2, params.get("type"));
+            ResultSet rs = stmt.executeQuery();
+            
           while (rs.next()) {
             Hashtable<String,String> o = new Hashtable<>();
             o.put("Pid",rs.getString("Pid"));
@@ -107,7 +115,7 @@ public class PointDBDAO extends AbstractDBDAO{
         String query = "update Point set Cid = ?,Name = ?,bit = ?,degree = ?,type = ? where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
         stmt.setString(1,data.get("Cid"));
-        stmt.setString(2,data.get("Nmae"));
+        stmt.setString(2,data.get("Name"));
         stmt.setString(3,data.get("bit"));
         stmt.setString(4,data.get("degree"));
         stmt.setString(5,data.get("type"));
@@ -123,7 +131,7 @@ public class PointDBDAO extends AbstractDBDAO{
         stmt.setString(3,data.get("Name"));
         stmt.setString(4,data.get("bit"));
         stmt.setString(5,data.get("degree"));
-        stmt.setString(6,data.get("tupe"));
+        stmt.setString(6,data.get("type"));
         
         return stmt;
     }
