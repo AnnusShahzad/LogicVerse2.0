@@ -16,7 +16,7 @@ import logicverse.Gates.model.JEDraggableComponent;
  *
  * @author Admin
  */
-public class JESwitch extends JEDraggableComponent {
+public class JESwitch extends JEClickableComponent {
     final int i = 10;
     final int d = 10;
     final int output = 20;
