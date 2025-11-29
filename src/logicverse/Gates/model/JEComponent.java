@@ -13,16 +13,31 @@ import logicverse.controller.Component;
 import logicverse.controller.Drawable;
 
 /**
- *
+ * The Parent Class of all the View Components
+ * Used by Clickable and Draggable Components like Switches and Gates
+ * Can be Extended by multiple Components with new features
  * @author Admin
  */
 public abstract class JEComponent extends JComponent implements Drawable {
+    /**
+     * Main Component for driving the Logic
+     */
     public Component component;
     
+    /**
+     * Default Constructor
+     * Associates the Component passed via Parameter
+     * @param obj Component Object, Usually a Component Child
+     */
     public JEComponent(Component obj) {
         component = obj;
     }
     
+    /**
+     * Responsible for Drawing the Component on Panel
+     * Includes the Implementation on Way to Draw Component on Panel
+     * @param obj Graphics2D Object
+     */
     public abstract void draw(Graphics2D obj);
     
 //    @Override
