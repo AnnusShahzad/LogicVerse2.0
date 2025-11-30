@@ -68,6 +68,8 @@ public class PointDBDAO extends AbstractDBDAO{
                 data.put("bit",rs.getString("bit"));
                 data.put("degree",rs.getString("degree"));
                 data.put("type",rs.getString("type"));
+                data.put("PosX", rs.getString("PosX"));
+                data.put("PosY", rs.getString("PosY"));
                                 
             }        
         } catch(SQLException ex){
@@ -98,6 +100,8 @@ public class PointDBDAO extends AbstractDBDAO{
             o.put("bit",rs.getString("bit"));
             o.put("degree",rs.getString("degree"));
             o.put("type",rs.getString("type"));
+            o.put("PosX", rs.getString("PosX"));
+            o.put("PosY", rs.getString("PosY"));
             
             data.add(o);
           }
@@ -111,7 +115,7 @@ public class PointDBDAO extends AbstractDBDAO{
     }
     
     private PreparedStatement updateStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "update Point set Cid = ?,Name = ?,bit = ?,degree = ?,type = ? where Pid = ?";
+        String query = "update Point set Cid = ?,Name = ?,bit = ?,degree = ?,type = ?,PosX = ?,PosY = ? where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
         stmt.setString(1,data.get("Cid"));
         stmt.setString(2,data.get("Name"));
@@ -119,10 +123,12 @@ public class PointDBDAO extends AbstractDBDAO{
         stmt.setString(4,data.get("degree"));
         stmt.setString(5,data.get("type"));
         stmt.setString(6,data.get("Pid"));
+        stmt.setString(7, data.get("PosX"));
+        stmt.setString(8, data.get("PosY"));
         return stmt;
     }
     private PreparedStatement insertStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "insert into Point(Pid,Cid,Name,bit,degree,type) values(?,?,?,?,?,?);";
+        String query = "insert into Point(Pid,Cid,Name,bit,degree,type,PosX,PosY) values(?,?,?,?,?,?,?,?);";
         PreparedStatement stmt = conn.prepareStatement(query);
         
         stmt.setString(1,data.get("Pid"));
@@ -131,12 +137,14 @@ public class PointDBDAO extends AbstractDBDAO{
         stmt.setString(4,data.get("bit"));
         stmt.setString(5,data.get("degree"));
         stmt.setString(6,data.get("type"));
+        stmt.setString(7, data.get("PosX"));
+        stmt.setString(8, data.get("PosY"));
         
         return stmt;
     }
     
     private PreparedStatement selectSingleStatement(Connection conn,String id) throws SQLException{
-        String query = "select Cid,Name,bit,degree,type from Point where Pid = ?";
+        String query = "select Cid,Name,bit,degree,type,PosX,PosY from Point where Pid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
         stmt.setString(1,id);
         return stmt;

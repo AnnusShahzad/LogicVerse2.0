@@ -183,6 +183,7 @@ public class Point {
         this.name = data.get("Name");
         this.bit = (Integer.parseInt(data.get("bit")) == 1)? true:false;
         this.degree = Integer.parseInt(data.get("degree"));
+        this.position = new Position(Integer.valueOf(data.get("PosX")),Integer.valueOf(data.get("PosY")));
         return true;
     }
     
@@ -209,6 +210,8 @@ public class Point {
         data.put("Cid",this.parent.getCid());
         data.put("type",type);
         data.put("bit", (this.bit)?"1":"0");
+        data.put("PosX", String.valueOf(this.position.getX()));
+        data.put("PosY", String.valueOf(this.position.getY()));
         return dao.save(data);
     }
     /**
@@ -224,14 +227,15 @@ public class Point {
         params.put("type", Type);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
-//            Point p = new Point(
-//                d.get("Pid"),
-//                d.get("Name"),
-//                (Integer.valueOf(d.get("bit"))== 1)?true:false,
-//                Integer.valueOf(d.get("degree")),
-//                parent
-//            );
-//            res.add(p);
+            Point p = new Point(
+                d.get("Pid"),
+                d.get("Name"),
+                (Integer.valueOf(d.get("bit"))== 1)?true:false,
+                Integer.valueOf(d.get("degree")),
+                parent,
+                new Position(Integer.valueOf(d.get("PosX")),Integer.valueOf(d.get("PosY")))
+            );
+            res.add(p);
         }
         return res;
     }
