@@ -142,7 +142,8 @@ public abstract class AbstractComponent implements Component {
         System.out.println("Connected Connections: " + this.Connections.size());
         System.out.println("Connected Components: " + this.Components.size() );
         onExecute();
-        container.repaint();
+        if(container)
+            container.repaint();
         for(Connection ct: Connections) {
             ct.refresh();
         }
