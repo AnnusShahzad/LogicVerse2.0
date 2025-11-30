@@ -5,16 +5,32 @@
 package logicverse.model;
 
 /**
- *
+ * Maintains the Position of the Components on the Canvas
  * @author Admin
  */
 public class Position {
+    /**
+     * X-Axis Coordinate
+     */
     private int x;
+    /**
+     * Y-Axis Coordinate
+     */
     private int y;
+    /**
+     * Parameterized Constructor
+     * Initializes the X and Y Axis Coordinates
+     * @param x X-Axis Coordinates
+     * @param y Y-Axis Coordinates
+     */
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
+    /**
+     * Default Constructor
+     * Initializes the coordinates to 0
+     */
     public Position() {
         x = 0;
         y = 0;
@@ -31,28 +47,31 @@ public class Position {
     }
     
     /**
-     * @return the X Axis Component
+     * Gets the X-Axis Coordinates
+     * @return X Axis 
      */
     public int getX() {
         return x;
     }
 
     /**
-     * @param x the X Axis Component
+     * Sets the X-Axis Coordinates
+     * @param x New X Axis Coordinates
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * @return the Y Axis Component
+     * Gets the Y-Axis Coordinates
+     * @return Y Axis Coordinates
      */
     public int getY() {
         return y;
     }
 
-    /**
-     * @param y the Y Axis Component
+    /** Sets the Y-Axis Coordinates
+     * @param y Y Axis Coordinates
      */
     public void setY(int y) {
         this.y = y;
