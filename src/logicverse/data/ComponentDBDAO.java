@@ -104,6 +104,54 @@ public class ComponentDBDAO extends AbstractDBDAO {
         return data;
     }
 
+    public ArrayList<String> loadAllAssociatedComponents(String Cid){
+        ArrayList<String> data = new ArrayList<>();
+        try {
+            Connection conn = getConnection();
+            String query = "select assiciatedCId from AssociatedComponents where parentCId = ?;";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, Cid);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                data.add(rs.getString("assiciatedCId"));
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+        }
+        return data;
+    }
+    
+    public boolean saveAssociations(String Cid,ArrayList<String> associatedIds){
+        int count = 0;
+        String query = "INSERT INTO AssociatedComponents (parentCId, assiciatedCId) VALUES (?, ?);";
+        try {
+            
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            for(String Aid : associatedIds ){
+                stmt.setString(1, Cid);
+                stmt.setString(2, Aid);
+                try{
+                    stmt.executeUpdate();
+                }
+                catch(SQLException ex){
+                    // if not Integrity Constraint Violation
+                    if(!ex.getSQLState().equals("23000"))
+                        throw ex; 
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+            return false;
+        }
+        return count > 0;
+    }
+    
     private PreparedStatement updateStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
         String query = "update Component set Name = ?,internalName = ?,PosX = ?,PosY = ? where Cid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
@@ -143,5 +191,5 @@ public class ComponentDBDAO extends AbstractDBDAO {
         stmt.setString(1, Cid);
         return stmt;
     }
-
+   
 }
