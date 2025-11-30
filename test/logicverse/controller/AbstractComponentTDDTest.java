@@ -242,7 +242,7 @@ public class AbstractComponentTDDTest {
     @Test
     public void testSaveReturnsBoolean() {
         try {
-            boolean result = comp1.save();
+            boolean result = comp1.save(null);
             assertTrue("save should return a boolean", result == true || result == false);
         } catch (Exception ex) {
             // DB may not be configured, but method should not throw other exceptions
