@@ -67,9 +67,13 @@ public abstract class AbstractComponent implements Component {
     }
     
     public void addConnection(Point i) {
-        throw new NullPointerException();
+        Point in = Outputs.get(0);
+        Connections.add(new Connection(in, i));
+        Components.add(i.getParent());
     }
+    
     public void addConnection(Point i, Point o) {
-        throw new NullPointerException();
+        Connections.add(new Connection(i, o));
+        Components.add(o.getParent());
     }
 }

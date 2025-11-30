@@ -28,13 +28,6 @@ public class Switch extends ClickableComponent {
         Outputs.get(0).set(clicked);
     }
 
-    @Override
-    public void addConnection(Point p) {
-        Point out = Outputs.get(0);
-        Connections.add(new Connection(out, p));
-        Components.add(p.getParent());
-    }
-
     public String toString() {
         Point out = Outputs.get(0);
         return out.toString();
