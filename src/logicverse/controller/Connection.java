@@ -11,34 +11,65 @@ import logicverse.data.ConnectionDBDAO;
 import logicverse.data.IDAO;
 
 /**
- *
+ * Class Responsible for managing Component Connections
  * @author Admin
  */
 public class Connection {
+    /**
+     * Connection Input Point
+     */
     public Point Input;
+    /**
+     * Connection Output Point
+     */
     public Point Output;
+    /**
+     * Unique Connection ID
+     * Used for retrieving and saving data between DAO
+     */
     public String ConnectionId;
+    /**
+     * Data Access Object
+     * Used for Flexible management of Data Objects
+     */
     protected static final IDAO dao = new ConnectionDBDAO();
+    /**
+     * Parametrized Constructor
+     * Creates a Connection between Point a to Point b
+     * @param a Connection Starting Point (Output Point)
+     * @param b Connection Ending Point (Input Point)(Next Component)
+     */
     public Connection(Point a, Point b) {
         ConnectionId = UUID.randomUUID().toString();
         Input = a;  
         Output = b;
         Output.add();
     }
+    /**
+     * Parameterized Constructor with Custom Connection ID
+     * Creates a Connection between Point a to Point b
+     * @param connectionId Custom Connection ID
+     * @param a Connection Starting Point (Output Point)
+     * @param b Connection Ending Point (Input Point)(Next Component)
+     */
     public Connection(String connectionId, Point a, Point b) {
         ConnectionId = connectionId;
         Input = a;  
         Output = b;
+        Output.add();
     }
+    /**
+     * Refreshes the Bit Got from Output Point to Input Point
+     */
     public void refresh() {
         Output.set(Input);
     }
     
-    // dao funictions
+    // DAO funictions
     
     /**
      * Delete a Connection
-     * @return Boolean
+     * @return Boolean True If Deleted, False Otherwise
      */
     public boolean delete(){
         Hashtable<String,String> params = new Hashtable<>();
@@ -47,7 +78,7 @@ public class Connection {
     }
     /**
      * Save a Connection
-     * @return Boolean
+     * @return Boolean True If Saved, False Otherwise
      */
     public boolean save(){
         Hashtable<String,String> data = new Hashtable<>();
@@ -59,7 +90,7 @@ public class Connection {
         return dao.save(data);
     }
     /**
-     * get all Connections linked with a Component
+     * Gets all Connections linked with a Component
      * @param parent parent Component
      * @return Array List of Connection for provided Component
      */
