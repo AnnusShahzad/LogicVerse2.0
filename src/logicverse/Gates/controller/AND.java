@@ -4,6 +4,7 @@
  */
 package logicverse.Gates.controller;
 
+import logicverse.Gates.model.JEComponent;
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
 import logicverse.controller.Point;
@@ -20,6 +21,7 @@ public class AND extends AbstractComponent {
         Inputs.add(new Point("X1", this));
         Inputs.add(new Point("X2", this));
         Outputs.add(new Point("Y1", this));
+//        this.container = container;
 //        incrementCount(this.getClass());
     }
     public void onExecute() {

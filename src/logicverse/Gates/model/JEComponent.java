@@ -31,6 +31,7 @@ public abstract class JEComponent extends JComponent implements Drawable {
      */
     public JEComponent(Component obj) {
         component = obj;
+        component.setContainer(this);
     }
     
     /**

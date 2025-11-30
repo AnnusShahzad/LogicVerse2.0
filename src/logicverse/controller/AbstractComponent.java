@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.Gates.controller.AND;
+import logicverse.Gates.model.JEComponent;
 import logicverse.data.ComponentDBDAO;
 import logicverse.data.IDAO;
 import logicverse.model.Position;
@@ -36,6 +36,7 @@ public abstract class AbstractComponent implements Component {
     protected String name;
     protected String shortName;
     protected String internalName;
+    protected JEComponent container;
     public AbstractComponent() {
         Cid = UUID.randomUUID().toString();
         Inputs = new ArrayList<>();
@@ -43,13 +44,33 @@ public abstract class AbstractComponent implements Component {
         Location = new Position();
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
+        container = null;
     }
     public AbstractComponent(String Cid){
+        this.Cid = Cid;
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
         Location = new Position();
         Connections = new ArrayList<>();
         Components = new ArrayList<>();
+        container = null;
+    }
+    public AbstractComponent(JEComponent cont) {
+        Inputs = new ArrayList<>();
+        Outputs = new ArrayList<>();
+        Location = new Position();
+        Connections = new ArrayList<>();
+        Components = new ArrayList<>();
+        container = cont;
+    }
+    public AbstractComponent(String Cid, JEComponent cont){
+        this.Cid = Cid;
+        Inputs = new ArrayList<>();
+        Outputs = new ArrayList<>();
+        Location = new Position();
+        Connections = new ArrayList<>();
+        Components = new ArrayList<>();
+        container = cont;
     }
     public void incrementCount() {
         counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
@@ -96,7 +117,12 @@ public abstract class AbstractComponent implements Component {
     public List<Point> getOutputs() {
         return this.Outputs;
     }
-    
+    public JEComponent getContainer() {
+        return this.container;
+    }
+    public void setContainer(JEComponent c) {
+        container = c;
+    }
     /**
      * Sets the Component Location on the Screen
      * @param x X-Axis Position
@@ -239,7 +265,7 @@ public abstract class AbstractComponent implements Component {
         params.put("Cid", circuitId);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
-            res.add(new AND());
+//            res.add(new AND());
         }
         return res;
     }

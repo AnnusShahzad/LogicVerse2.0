@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import logicverse.Gates.controller.NOT;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.model.JEDraggableComponent;
+import logicverse.controller.AbstractComponent;
 
 /**
  *
@@ -52,5 +53,8 @@ public class JENOT extends JEDraggableComponent {
         obj.drawLine(x+d+r, y, x+d+2*r+l/12, y);
         // Input Bar
         obj.drawLine(x-d-l/2, y, x-d, y);
+        
+        ((AbstractComponent)component).Inputs.get(0).setPosition(x-d-l/2, y);
+        ((AbstractComponent)component).Outputs.get(0).setPosition(x+d+2*r+l/12, y);
     }
 }

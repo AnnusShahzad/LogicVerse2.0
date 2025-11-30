@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import logicverse.Gates.controller.Probe;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.model.JEDraggableComponent;
+import logicverse.controller.AbstractComponent;
 
 /**
  *
@@ -53,5 +54,7 @@ public class JEProbe extends JEDraggableComponent {
             obj.drawString("1",(iw+s)/2,(iw+s)/2);
         else
             obj.drawString("0",(iw+s)/2-2.6f,(iw+s)/2+3.5f);
+        
+        ((AbstractComponent)component).Inputs.get(0).setPosition((iw+s)/2, iw+s+l);
     }
 }

@@ -5,9 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
-import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.controller.OR;
 import logicverse.Gates.model.JEDraggableComponent;
+import logicverse.controller.AbstractComponent;
 
 /**
  *
@@ -52,6 +52,10 @@ public class JEOR extends JEDraggableComponent {
         obj.drawLine(disp_x, 2*h/5, disp_x+l, 2*h/5); // Input 1
         obj.drawLine(disp_x, 3*h/5, disp_x+l, 3*h/5); // Input 2
         obj.drawArc(disp_x, 5*h/20, l+4, l+35, -90, 180); // Bell Bottom Curve
-        obj.drawLine(disp_x+cx+l+10, cy, cx+l+30, cy);
+        obj.drawLine(disp_x+cx+l+10, cy, disp_x+cx+l+30, cy);
+    
+        ((AbstractComponent)component).Inputs.get(0).setPosition(disp_x, 2*h/5);
+        ((AbstractComponent)component).Inputs.get(1).setPosition(disp_x, 3*h/5);
+        ((AbstractComponent)component).Outputs.get(0).setPosition(disp_x+cx+l+30, cy);
     }
 }
