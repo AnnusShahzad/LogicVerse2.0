@@ -31,6 +31,9 @@ public class Point {
      * The Boolean bit it has
      */
     boolean bit;
+    /**
+     * Point Position on Container
+     */
     Position position;
     /**
      * Number of Other Points Connected

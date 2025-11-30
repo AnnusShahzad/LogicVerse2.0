@@ -44,6 +44,7 @@ public class Circuit {
      */
     public Circuit() {
         ID = UUID.randomUUID().toString();
+        Name = "";
         Components = new ArrayList<>();
     }
 
