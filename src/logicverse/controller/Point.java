@@ -116,13 +116,26 @@ public class Point {
     public void set(Point point) {
         bit = point.get();
     }
+    /**
+     * Gets the Position of the Point
+     * @return Point Position
+     */
     public Position getPosition() {
         return this.position;
     }
+    /**
+     * Sets the Position of the Point
+     * @param p Point Position
+     */
     public void setPosition(Position p) {
         position.setX(p.getX());
         position.setY(p.getY());
     }
+    /**
+     * Sets the Position of the Point
+     * @param x Point X-Axis Position
+     * @param y Point Y-Axis Position
+     */
     public void setPosition(int x, int y) {
         position.setPosition(x, y);
     }
@@ -154,7 +167,7 @@ public class Point {
     // dao funictions
     /**
      * load a point attributes from db based on it Pid
-     * @return Boolean
+     * @return Boolean True, If successfully Loaded, False Otherwise
      */
      public boolean load(){
         
@@ -173,7 +186,7 @@ public class Point {
     
     /**
      * Delete a Point
-     * @return Boolean
+     * @return Boolean True, If deleted successfully. False Otherwise
      */
     public boolean delete(){
         Hashtable<String,String> params = new Hashtable<>();
@@ -183,7 +196,7 @@ public class Point {
     /**
      * Save a Point
      * @param type type of point of component (Input,Output)
-     * @return Boolean
+     * @return Boolean True, If saved successfully. False Otherwise.
      */
     public boolean save(String type){
         Hashtable<String,String> data = new Hashtable<>();
@@ -199,7 +212,7 @@ public class Point {
      * Get all Point associated with a Component
      * @param parent Parent component
      * @param Type of points (Input or Output)
-     * @return ArrayList of p
+     * @return List of Associated Points
      */
     public static ArrayList<Point> loadAll(Component parent, String Type){
         ArrayList<Point> res = new ArrayList<>();
