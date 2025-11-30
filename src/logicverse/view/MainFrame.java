@@ -5,8 +5,15 @@
 package logicverse.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import logicverse.Gates.controller.Circuit;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.view.JEAND;
@@ -65,7 +72,8 @@ public class MainFrame extends javax.swing.JFrame {
         componentList = new javax.swing.JList<>();
         ConnectComponentBtn = new javax.swing.JButton();
         truthTableView = new javax.swing.JButton();
-        truthTableView1 = new javax.swing.JButton();
+        repaintBtn = new javax.swing.JButton();
+        exportPNG = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LogicVerse");
@@ -118,11 +126,19 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        truthTableView1.setText("Repaint");
-        truthTableView1.setDoubleBuffered(true);
-        truthTableView1.addActionListener(new java.awt.event.ActionListener() {
+        repaintBtn.setText("Repaint");
+        repaintBtn.setDoubleBuffered(true);
+        repaintBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                truthTableView1ActionPerformed(evt);
+                repaintBtnActionPerformed(evt);
+            }
+        });
+
+        exportPNG.setText("Export PNG");
+        exportPNG.setDoubleBuffered(true);
+        exportPNG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportPNGActionPerformed(evt);
             }
         });
 
@@ -143,7 +159,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(truthTableView1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(repaintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(exportPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -165,7 +182,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(truthTableView)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(truthTableView1)
+                .addComponent(repaintBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportPNG)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -221,9 +240,36 @@ public class MainFrame extends javax.swing.JFrame {
         new AnalyzeTruthTable(this, circuit, true).setVisible(true);
     }//GEN-LAST:event_truthTableViewActionPerformed
 
-    private void truthTableView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_truthTableView1ActionPerformed
+    private void repaintBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_repaintBtnActionPerformed
         canvas.repaint();
-    }//GEN-LAST:event_truthTableView1ActionPerformed
+    }//GEN-LAST:event_repaintBtnActionPerformed
+
+    private void exportPNGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportPNGActionPerformed
+        JFileChooser f = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG Image", "png");
+        f.setFileFilter(filter);
+        int opt = f.showSaveDialog(this);
+        if(opt != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        // Check if the filename has png extension
+        File filePath = f.getSelectedFile();
+        if(!filePath.getName().toLowerCase().endsWith(".png"))
+            filePath = new File(filePath.getAbsoluteFile() + ".png");
+        BufferedImage img = new BufferedImage(canvas.getWidth(), canvas.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = img.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, img.getWidth(), img.getHeight());
+        canvas.paint(g);
+        try {
+            ImageIO.write(img, "png", filePath);
+            logger.info("File Saved Succussfully");
+        }
+        catch(Exception e) {
+            logger.severe(e.toString());
+        }
+        g.dispose();
+    }//GEN-LAST:event_exportPNGActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,11 +301,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton addComponentBtn;
     private javax.swing.JList<String> componentList;
     private javax.swing.JPanel componentPreview;
+    private javax.swing.JButton exportPNG;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton repaintBtn;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JButton truthTableView;
-    private javax.swing.JButton truthTableView1;
     // End of variables declaration//GEN-END:variables
 }
