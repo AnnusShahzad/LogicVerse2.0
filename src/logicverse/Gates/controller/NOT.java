@@ -4,9 +4,11 @@
  */
 package logicverse.Gates.controller;
 
+import java.util.ArrayList;
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
 import logicverse.controller.Point;
+import logicverse.model.Position;
 
 /**
  *
@@ -21,6 +23,14 @@ public class NOT extends AbstractComponent {
         Outputs.add(new Point("Y1", this));
 //        incrementCount(this.getClass());
     }
+
+    public NOT(Position Location, String Cid, String name, String internalName) {
+        super(Location, Cid, name, internalName);
+        shortName = internalName;
+    }
+    
+    
+    
     public void onExecute() {
         // Just because Zohaib Hussain & Ali Ahmad said
         boolean inputBit = Inputs.get(0).get();

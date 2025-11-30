@@ -4,10 +4,9 @@
  */
 package logicverse.Gates.controller;
 
-import logicverse.controller.AbstractComponent;
 import logicverse.controller.ClickableComponent;
-import logicverse.controller.Connection;
 import logicverse.controller.Point;
+import logicverse.model.Position;
 
 /**
  *
@@ -21,6 +20,11 @@ public class Switch extends ClickableComponent {
         Outputs.add(new Point("X1", this));
 //        incrementCount(this.getClass());
     }
+
+    public Switch( Position Location, String Cid, String name, String internalName, boolean clicked) {
+        super( Location, Cid, name, internalName, clicked);
+    }
+    
     @Override
     protected void onClick() {
         Outputs.get(0).set(clicked);
