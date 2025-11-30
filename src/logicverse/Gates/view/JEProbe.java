@@ -6,10 +6,10 @@ package logicverse.Gates.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.Probe;
-import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
 
@@ -50,11 +50,12 @@ public class JEProbe extends JEDraggableComponent {
         obj.drawLine((iw+s)/2, iw+s, (iw+s)/2, iw+s+l);
         
         // Bit
-        if(component.toString() == "true")
-            obj.drawString("1",(iw+s)/2,(iw+s)/2);
+        if(((AbstractComponent)component).Inputs.get(0).get())
+            obj.drawString("1",(iw+s)/2-2.6f,(iw+s)/2+3.5f);
         else
             obj.drawString("0",(iw+s)/2-2.6f,(iw+s)/2+3.5f);
-        
+        obj.setFont(new Font("Arial", Font.PLAIN, 11));
+        obj.drawString(component.getName(), cx-(component.getName().length()*3f), (iw+s)/2+22f);
         ((AbstractComponent)component).Inputs.get(0).setPosition((iw+s)/2, iw+s+l);
     }
 }

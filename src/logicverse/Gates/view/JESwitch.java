@@ -57,5 +57,7 @@ public class JESwitch extends JEClickableComponent {
         obj.drawString("1", 1, 7*y/4-1.5f);
         
         ((AbstractComponent)component).Outputs.get(0).setPosition(x+output, y);
+        
+        obj.drawString(component.getName(), x, y-2);
     }
 }

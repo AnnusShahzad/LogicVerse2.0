@@ -6,6 +6,7 @@ package logicverse.Gates.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.NOT;
@@ -56,5 +57,8 @@ public class JENOT extends JEDraggableComponent {
         
         ((AbstractComponent)component).Inputs.get(0).setPosition(x-d-l/2, y);
         ((AbstractComponent)component).Outputs.get(0).setPosition(x+d+2*r+l/12, y);
+        
+        obj.setFont(new Font("Arial", Font.PLAIN, 11));
+        obj.drawString(component.getName(), x-(component.getName().length()*4.5f), y+3);
     }
 }

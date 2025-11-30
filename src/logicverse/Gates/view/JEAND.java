@@ -6,6 +6,7 @@ package logicverse.Gates.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.AND;
@@ -56,6 +57,9 @@ public class JEAND extends JEDraggableComponent {
         ((AbstractComponent)component).Inputs.get(0).setPosition(disp_x, 2*h/5);
         ((AbstractComponent)component).Inputs.get(1).setPosition(disp_x, 3*h/5);
         ((AbstractComponent)component).Outputs.get(0).setPosition(disp_x+l+55+l, cy);
+        
+        obj.setFont(new Font("Arial", Font.PLAIN, 11));
+        obj.drawString(component.getName(), cx-(component.getName().length()*4.5f), cy+3);
         
         for(Connection c: ((AbstractComponent)component).Connections) {
             Position s = c.Input.getPosition();

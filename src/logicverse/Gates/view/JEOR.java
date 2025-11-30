@@ -2,6 +2,7 @@ package logicverse.Gates.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
@@ -57,5 +58,8 @@ public class JEOR extends JEDraggableComponent {
         ((AbstractComponent)component).Inputs.get(0).setPosition(disp_x, 2*h/5);
         ((AbstractComponent)component).Inputs.get(1).setPosition(disp_x, 3*h/5);
         ((AbstractComponent)component).Outputs.get(0).setPosition(disp_x+cx+l+30, cy);
+        
+        obj.setFont(new Font("Arial", Font.PLAIN, 11));
+        obj.drawString(component.getName(), cx-(component.getName().length()*4.5f), cy+3);
     }
 }
