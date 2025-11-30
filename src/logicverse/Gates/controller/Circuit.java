@@ -124,7 +124,7 @@ public class Circuit {
      * @return Boolean
      */
      public boolean load(){
-        
+         System.out.println("Inside load circuit");
         Hashtable<String,String> params = new Hashtable<>();
         params.put("CIRid", ID);
         Hashtable<String,String> data = dao.load(params);
@@ -135,6 +135,12 @@ public class Circuit {
         Components = AbstractComponent.loadAll(ID);
         // load component associations
         AbstractComponent.loadAllCmpntsAssociation(Components);
+        for(Component cmp: Components){
+            System.out.println("=================");
+            System.out.println(cmp);
+            System.out.println("=================");
+        }
+        System.out.println("after loading associated componenets");
         return true;
     }
     /**
