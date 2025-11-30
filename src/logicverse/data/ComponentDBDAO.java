@@ -23,11 +23,15 @@ public class ComponentDBDAO extends AbstractDBDAO {
         int count = 0;
         try {
             Connection conn = getConnection();
-            PreparedStatement stmt = updateStatement(conn, data);
-            count = stmt.executeUpdate();
+            PreparedStatement compStmt = updateStatement(conn, data);
+            if(data.containsKey("clicked"))
+                updateClickStatement(conn, data).executeUpdate();
+            count = compStmt.executeUpdate();
             if (count == 0) {
-                stmt = insertStatement(conn, data);
-                count = stmt.executeUpdate();
+                compStmt = insertStatement(conn, data);
+                count = compStmt.executeUpdate();
+                if(data.containsKey("clicked"))
+                    insertClickedStatement(conn, data).executeUpdate();
             }
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
@@ -35,7 +39,7 @@ public class ComponentDBDAO extends AbstractDBDAO {
             System.out.println("VendorError: " + ex.getErrorCode());
             return false;
         }
-        return count > 0 ? true : false;
+        return count > 0 ;
     }
 
     @Override
@@ -45,13 +49,14 @@ public class ComponentDBDAO extends AbstractDBDAO {
             Connection conn = getConnection();
             PreparedStatement stmt = deleteStatement(conn, params.get("Cid"));
             count = stmt.executeUpdate();
+            deleteCLickedStatement(conn, params.get("Cid")).executeUpdate();
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
             return false;
         }
-        return count > 0 ? true : false;
+        return count > 0 ;
     }
 
     @Override
@@ -125,7 +130,6 @@ public class ComponentDBDAO extends AbstractDBDAO {
     }
     
     public boolean saveAssociations(String Cid,ArrayList<String> associatedIds){
-        int count = 0;
         String query = "INSERT INTO AssociatedComponents (parentCId, assiciatedCId) VALUES (?, ?);";
         try {
             
@@ -149,10 +153,10 @@ public class ComponentDBDAO extends AbstractDBDAO {
             System.out.println("VendorError: " + ex.getErrorCode());
             return false;
         }
-        return count > 0;
+        return true;
     }
     
-    private PreparedStatement updateStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
+        private PreparedStatement updateStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
         String query = "update Component set Name = ?,internalName = ?,PosX = ?,PosY = ? where Cid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, data.get("Name"));
@@ -160,7 +164,15 @@ public class ComponentDBDAO extends AbstractDBDAO {
         stmt.setString(3, data.get("PosX"));
         stmt.setString(4, data.get("PosY"));
         stmt.setString(5, data.get("Cid"));
-
+        return stmt;
+    }
+        
+        
+    private PreparedStatement updateClickStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
+        String query = "update ClickableComponent set clicked = ? where Cid = ?;";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, data.get("clicked"));
+        stmt.setString(2, data.get("Cid"));
         return stmt;
     }
 
@@ -177,16 +189,31 @@ public class ComponentDBDAO extends AbstractDBDAO {
 
         return stmt;
     }
+    private PreparedStatement insertClickedStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
+        String query = "insert into ClickableComponent (Cid,clicked) values(?,?)";
+        
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, data.get("Cid"));
+        stmt.setString(2, data.get("clicked"));
+
+        return stmt;
+    }
 
     private PreparedStatement selectSingleStatement(Connection conn, String cid) throws SQLException {
-        String query = "select Name,internalName, PosX,PosY where Cid = ?";
+        String query = "select c.Name,c.internalName,c.PosX,c.PosY,c.Cid,cc.clicked from Component c Left JOIN ClickableComponent cc on cc.Cid = c.Cid where c.Cid = ?;";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, cid);
         return stmt;
     }
 
     private PreparedStatement deleteStatement(Connection conn, String Cid) throws SQLException {
-        String query = "delete from Component where Cid = ?;";
+        String query = "delete from Component where Cid = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, Cid);
+        return stmt;
+    }
+    private PreparedStatement deleteCLickedStatement(Connection conn, String Cid) throws SQLException {
+        String query = "delete from ClickableComponent where Cid = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, Cid);
         return stmt;

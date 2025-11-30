@@ -33,7 +33,7 @@ public abstract class AbstractComponent implements Component {
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
     protected static final Map<Class<?>, Integer> counters = new HashMap<>();
-    private static final IDAO dao = new ComponentDBDAO();
+    protected static final IDAO dao = new ComponentDBDAO();
     /**
      * Name of the Component
      */
