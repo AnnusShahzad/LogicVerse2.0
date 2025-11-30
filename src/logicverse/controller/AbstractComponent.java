@@ -16,6 +16,7 @@ public abstract class AbstractComponent implements Component {
     public ArrayList<Point> Outputs;
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
+    
     /**
      * Name of the Component
      */
@@ -50,6 +51,9 @@ public abstract class AbstractComponent implements Component {
         }
         return -1;
     }
+    
+    public boolean getState() { return false ; }
+    public void click() { return; }
     
     // Just for Testing Purpose, Remove it in Production
     public void setOutputBit(int i, boolean bit) {
