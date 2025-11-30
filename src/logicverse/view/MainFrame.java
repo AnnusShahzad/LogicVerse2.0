@@ -4,6 +4,8 @@
  */
 package logicverse.view;
 
+import java.awt.BorderLayout;
+import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import logicverse.Gates.controller.Circuit;
 import logicverse.Gates.model.JEComponent;
@@ -22,13 +24,26 @@ public class MainFrame extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private JEComponent selectedComponent;
     private Circuit circuit;
-    
+    private Canvas canvas;
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         selectedComponent = null;
         circuit = new Circuit();
+        canvas = new Canvas(circuit);
+        GroupLayout mainPanelLayout = new javax.swing.GroupLayout(canvas);
+        canvas.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        getContentPane().add(canvas, java.awt.BorderLayout.CENTER);
+        add(canvas, BorderLayout.CENTER);
         initComponents();
     }
 
@@ -50,11 +65,12 @@ public class MainFrame extends javax.swing.JFrame {
         componentList = new javax.swing.JList<>();
         ConnectComponentBtn = new javax.swing.JButton();
         truthTableView = new javax.swing.JButton();
-        mainPanel = new javax.swing.JPanel();
+        truthTableView1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LogicVerse");
         setBackground(java.awt.Color.white);
+        setMinimumSize(new java.awt.Dimension(623, 500));
 
         jLabel1.setText("Preview");
         jLabel1.setDoubleBuffered(true);
@@ -102,6 +118,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        truthTableView1.setText("Repaint");
+        truthTableView1.setDoubleBuffered(true);
+        truthTableView1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                truthTableView1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -118,7 +142,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1)
                                 .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(truthTableView1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -139,26 +164,12 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(ConnectComponentBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(truthTableView)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(truthTableView1)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(rightPanel, java.awt.BorderLayout.EAST);
-
-        mainPanel.setMinimumSize(new java.awt.Dimension(500, 500));
-        mainPanel.setPreferredSize(new java.awt.Dimension(500, 500));
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
@@ -198,16 +209,21 @@ public class MainFrame extends javax.swing.JFrame {
             return;
         }
         String componentInternalName = selectedComponent.component.getInternalName();
-        new AddComponentInfo(this, circuit, mainPanel, componentInternalName, true).setVisible(true);
+        new AddComponentInfo(this, circuit, canvas, componentInternalName, true).setVisible(true);
     }//GEN-LAST:event_addComponentBtnActionPerformed
 
     private void ConnectComponentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConnectComponentBtnActionPerformed
         new ConnectComponent(this, circuit, true).setVisible(true);
+        canvas.repaint();
     }//GEN-LAST:event_ConnectComponentBtnActionPerformed
 
     private void truthTableViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_truthTableViewActionPerformed
         new AnalyzeTruthTable(this, circuit, true).setVisible(true);
     }//GEN-LAST:event_truthTableViewActionPerformed
+
+    private void truthTableView1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_truthTableView1ActionPerformed
+        canvas.repaint();
+    }//GEN-LAST:event_truthTableView1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,8 +258,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JButton truthTableView;
+    private javax.swing.JButton truthTableView1;
     // End of variables declaration//GEN-END:variables
 }

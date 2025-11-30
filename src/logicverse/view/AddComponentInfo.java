@@ -32,7 +32,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         initComponents();
         this.jpanel = jpanel;
         this.component = null;
-        setTitle("Add " + component + " Component");
+        setTitle("Add " + componentName + " Component");
         // MINIX
         System.out.println("Component Name = " + component);
         switch(componentName) {
@@ -95,6 +95,9 @@ public class AddComponentInfo extends javax.swing.JDialog {
                 addCompToPanelActionPerformed(evt);
             }
         });
+
+        CompName.setDoubleBuffered(true);
+        CompName.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

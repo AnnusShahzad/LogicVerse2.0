@@ -114,6 +114,10 @@
     <Component class="javax.swing.JTextField" name="XAxixPos">
     </Component>
     <Component class="javax.swing.JTextField" name="CompName">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
