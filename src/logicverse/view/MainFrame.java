@@ -52,6 +52,7 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(canvas, java.awt.BorderLayout.CENTER);
         add(canvas, BorderLayout.CENTER);
         initComponents();
+        setTitle("Untitled - LogicVerse 26");
     }
 
     /**
@@ -74,6 +75,20 @@ public class MainFrame extends javax.swing.JFrame {
         truthTableView = new javax.swing.JButton();
         repaintBtn = new javax.swing.JButton();
         exportPNG = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        circuitList = new javax.swing.JList<>();
+        loadCircuitBtn = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        newCircuitBtn = new javax.swing.JMenuItem();
+        saveCircuitBtn = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        changeCircuitNameBtn = new javax.swing.JMenuItem();
+        exportImageBtn = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        exitBtn = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LogicVerse");
@@ -142,6 +157,21 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Circuits");
+        jLabel3.setDoubleBuffered(true);
+
+        circuitList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        circuitList.setDoubleBuffered(true);
+        jScrollPane2.setViewportView(circuitList);
+
+        loadCircuitBtn.setText("Load Circuit");
+        loadCircuitBtn.setDoubleBuffered(true);
+        loadCircuitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadCircuitBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -150,18 +180,23 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(componentPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(repaintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exportPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadCircuitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(rightPanelLayout.createSequentialGroup()
                         .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel2)
-                                .addComponent(jScrollPane1)
-                                .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(repaintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(exportPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         rightPanelLayout.setVerticalGroup(
@@ -171,7 +206,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(componentPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -185,10 +220,67 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(repaintBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exportPNG)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loadCircuitBtn)
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         getContentPane().add(rightPanel, java.awt.BorderLayout.EAST);
+
+        jMenu1.setText("File");
+
+        newCircuitBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        newCircuitBtn.setText("New Circuit");
+        newCircuitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newCircuitBtnActionPerformed(evt);
+            }
+        });
+        jMenu1.add(newCircuitBtn);
+
+        saveCircuitBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        saveCircuitBtn.setText("Save Circuit");
+        jMenu1.add(saveCircuitBtn);
+        jMenu1.add(jSeparator1);
+
+        changeCircuitNameBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        changeCircuitNameBtn.setText("Change Name");
+        changeCircuitNameBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeCircuitNameBtnActionPerformed(evt);
+            }
+        });
+        jMenu1.add(changeCircuitNameBtn);
+
+        exportImageBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        exportImageBtn.setText("Export Image");
+        exportImageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportImageBtnActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exportImageBtn);
+        jMenu1.add(jSeparator2);
+
+        exitBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        exitBtn.setText("Exit");
+        exitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitBtnActionPerformed(evt);
+            }
+        });
+        jMenu1.add(exitBtn);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
         setLocationRelativeTo(null);
@@ -271,6 +363,33 @@ public class MainFrame extends javax.swing.JFrame {
         g.dispose();
     }//GEN-LAST:event_exportPNGActionPerformed
 
+    private void loadCircuitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadCircuitBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadCircuitBtnActionPerformed
+
+    private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
+        dispose();
+    }//GEN-LAST:event_exitBtnActionPerformed
+
+    private void exportImageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportImageBtnActionPerformed
+        exportPNGActionPerformed(evt);
+    }//GEN-LAST:event_exportImageBtnActionPerformed
+
+    private void newCircuitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newCircuitBtnActionPerformed
+        circuit = new Circuit();
+        canvas.changeCircuit(circuit);
+        canvas.removeAll();
+        canvas.repaint();
+        setTitle("Untitled - LogicVerse 26");
+    }//GEN-LAST:event_newCircuitBtnActionPerformed
+
+    private void changeCircuitNameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeCircuitNameBtnActionPerformed
+        String newName = JOptionPane.showInputDialog("Please Enter Circuit New Name", circuit.getName());
+        circuit.setName(newName);
+        JOptionPane.showMessageDialog(this, "Circuit renamed Successfully");
+        setTitle(circuit.getName() + " - LogicVerse 26");
+    }//GEN-LAST:event_changeCircuitNameBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -299,14 +418,28 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ConnectComponentBtn;
     private javax.swing.JButton addComponentBtn;
+    private javax.swing.JMenuItem changeCircuitNameBtn;
+    private javax.swing.JList<String> circuitList;
     private javax.swing.JList<String> componentList;
     private javax.swing.JPanel componentPreview;
+    private javax.swing.JMenuItem exitBtn;
+    private javax.swing.JMenuItem exportImageBtn;
     private javax.swing.JButton exportPNG;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JButton loadCircuitBtn;
+    private javax.swing.JMenuItem newCircuitBtn;
     private javax.swing.JButton repaintBtn;
     private javax.swing.JPanel rightPanel;
+    private javax.swing.JMenuItem saveCircuitBtn;
     private javax.swing.JButton truthTableView;
     // End of variables declaration//GEN-END:variables
 }

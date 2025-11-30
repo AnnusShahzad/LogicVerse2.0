@@ -26,6 +26,10 @@ public class Canvas extends JPanel {
         circuit = c;
     }
     
+    public void changeCircuit(Circuit c) {
+        circuit = c;
+    }
+    
     @Override
     public void paintComponent(Graphics obj) {
         super.paintComponent(obj);
