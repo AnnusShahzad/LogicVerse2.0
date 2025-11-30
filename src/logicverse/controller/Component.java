@@ -41,4 +41,11 @@ public interface Component {
      * @return Returns True If Component is Clicked, False Otherwise
      */
     public boolean getState();
+    
+    /**
+     * Sets the Location of the Component
+     * @param x X-Axis Component
+     * @param y Y-Axis Component
+     */
+    public void setLocation(int x, int y);
 }

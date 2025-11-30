@@ -21,6 +21,16 @@ public class Position {
     }
 
     /**
+     * Sets the Position Attributes
+     * @param x X-Axis Attributes
+     * @param y Y-Axis Attributes
+     */
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    
+    /**
      * @return the X Axis Component
      */
     public int getX() {
