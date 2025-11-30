@@ -14,11 +14,16 @@ import logicverse.controller.Component;
 import logicverse.controller.Drawable;
 
 /**
- *
+ * Clickable extension of JEComponent
+ * Includes Clickable as well as Draggable features
  * @author Admin
  */
-public abstract class JEClickableComponent extends JEComponent {
-   
+public abstract class JEClickableComponent extends JEDraggableComponent {
+   /**
+    * Default Constructor
+    * Initializes related attributes and components
+    * @param obj Component Object to associate
+    */
     public JEClickableComponent(Component obj) {
         super(obj);
         this.addMouseListener(new MouseAdapter() {
@@ -29,7 +34,10 @@ public abstract class JEClickableComponent extends JEComponent {
         });
         this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
-    
+    /**
+     * Responsible for drawing the component
+     * @param obj Graphics2D Object
+     */
     public abstract void draw(Graphics2D obj);
     
 //    @Override
