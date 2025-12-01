@@ -7,12 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.controller.OR;
+import logicverse.Gates.model.JEDraggableComponent;
 
 /**
  *
  * @author Admin
  */
-public class JEOR extends JEComponent {
+public class JEOR extends JEDraggableComponent {
     final int d = 25;
     final int l = 20;
     final int r = 10;

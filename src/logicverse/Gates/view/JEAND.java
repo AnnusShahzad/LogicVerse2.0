@@ -11,12 +11,13 @@ import java.awt.Graphics2D;
 import logicverse.Gates.model.JEComponent;
 import logicverse.controller.Component;
 import logicverse.Gates.controller.AND;
+import logicverse.Gates.model.JEDraggableComponent;
 
 /**
  *
  * @author Admin
  */
-public class JEAND extends JEComponent {
+public class JEAND extends JEDraggableComponent {
     final int d = 25;
     final int l = 20;
     final int r = 10;

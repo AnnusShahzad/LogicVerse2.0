@@ -41,6 +41,8 @@ public class ConnectComponent extends javax.swing.JDialog {
         jComboBox4 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
+        setResizable(false);
 
         jLabel1.setText("Component Name");
 
@@ -117,6 +119,7 @@ public class ConnectComponent extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

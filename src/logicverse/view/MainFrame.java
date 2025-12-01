@@ -4,9 +4,13 @@
  */
 package logicverse.view;
 
+import javax.swing.JOptionPane;
+import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.view.JEAND;
 import logicverse.Gates.view.JENOT;
 import logicverse.Gates.view.JEOR;
+import logicverse.Gates.view.JEProbe;
+import logicverse.Gates.view.JESwitch;
 
 /**
  *
@@ -15,11 +19,13 @@ import logicverse.Gates.view.JEOR;
 public class MainFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
-
+    private JEComponent selectedComponent;
+    
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
+        selectedComponent = null;
         initComponents();
     }
 
@@ -32,36 +38,37 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new javax.swing.JPanel();
-        componentPreview = new javax.swing.JPanel();
+        rightPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        componentPreview = new javax.swing.JPanel();
+        addComponentBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         componentList = new javax.swing.JList<>();
-        addComponentBtn = new javax.swing.JButton();
+        mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("LogicVerse");
         setBackground(java.awt.Color.white);
 
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 925, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jLabel1.setText("Preview");
+        jLabel1.setDoubleBuffered(true);
 
         componentPreview.setPreferredSize(new java.awt.Dimension(111, 111));
 
-        jLabel1.setText("Preview");
+        addComponentBtn.setText("Add");
+        addComponentBtn.setDoubleBuffered(true);
+        addComponentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addComponentBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Components");
+        jLabel2.setDoubleBuffered(true);
 
         componentList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "NOT", "AND", "OR" };
+            String[] strings = { "NOT", "AND", "OR", "Binary Probe", "Binary Switch" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -74,65 +81,98 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(componentList);
 
-        addComponentBtn.setText("Add");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
+        rightPanel.setLayout(rightPanelLayout);
+        rightPanelLayout.setHorizontalGroup(
+            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(componentPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(rightPanelLayout.createSequentialGroup()
+                        .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(addComponentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2)
+                                .addComponent(jScrollPane1)
+                                .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+        rightPanelLayout.setVerticalGroup(
+            rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rightPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(componentPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(addComponentBtn)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        getContentPane().add(rightPanel, java.awt.BorderLayout.EAST);
+
+        mainPanel.setMinimumSize(new java.awt.Dimension(500, 500));
+        mainPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void componentListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_componentListValueChanged
         String comp = componentList.getSelectedValue();
         componentPreview.removeAll();
         switch(comp) {
             case "AND":
-                componentPreview.add(new JEAND());
+                selectedComponent = new JEAND();
                 break;
             case "OR":
-                componentPreview.add(new JEOR());
+                selectedComponent = new JEOR();
                 break;
             case "NOT":
-                componentPreview.add(new JENOT());
+                selectedComponent = new JENOT();
+                break;
+            case "Binary Probe":
+                selectedComponent = new JEProbe();
+                break;
+            case "Binary Switch":
+                selectedComponent = new JESwitch();
                 break;
             default:
                 break;
         }
+        componentPreview.add(selectedComponent);
         componentPreview.revalidate();
         componentPreview.repaint();
     }//GEN-LAST:event_componentListValueChanged
+
+    private void addComponentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addComponentBtnActionPerformed
+        if(selectedComponent == null) {
+            JOptionPane.showMessageDialog(this, "No Component selected, Please Select a Component to Continue!");
+            return;
+        }
+        String componentInternalName = selectedComponent.component.getInternalName();
+        new AddComponentInfo(this, mainPanel, componentInternalName, true).setVisible(true);
+    }//GEN-LAST:event_addComponentBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,5 +207,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JPanel rightPanel;
     // End of variables declaration//GEN-END:variables
 }

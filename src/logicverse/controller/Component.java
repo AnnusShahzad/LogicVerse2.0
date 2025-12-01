@@ -48,4 +48,19 @@ public interface Component {
      * @param y Y-Axis Component
      */
     public void setLocation(int x, int y);
+    /**
+     * Returns the Internal Name of a Component (AND,OR,NOT,SWITCH,PROBE)
+     * @return Internal Name of Component
+     */
+    public String getInternalName();
+    /**
+     * Returns the Name of the Component (AND1, OR1 etc)
+     * @return Name of Component
+     */
+    public String getName();
+    /**
+     * Sets the Name of the Component passed by the parameter
+     * @param name New Name of the Component
+     */
+    public void setName(String name);
 }

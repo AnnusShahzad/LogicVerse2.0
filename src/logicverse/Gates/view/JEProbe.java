@@ -10,12 +10,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.Probe;
 import logicverse.Gates.model.JEComponent;
+import logicverse.Gates.model.JEDraggableComponent;
 
 /**
  *
  * @author Admin
  */
-public class JEProbe extends JEComponent {
+public class JEProbe extends JEDraggableComponent {
     final int iw = 50; // Internal Width
     final int s = 5;  // Space between Boxes
     final int l = 60;  // Length of Input

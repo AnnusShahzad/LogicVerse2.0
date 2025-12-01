@@ -4,6 +4,14 @@
  */
 package logicverse.view;
 
+import javax.swing.JPanel;
+import logicverse.Gates.model.JEComponent;
+import logicverse.Gates.view.JEAND;
+import logicverse.Gates.view.JENOT;
+import logicverse.Gates.view.JEOR;
+import logicverse.Gates.view.JEProbe;
+import logicverse.Gates.view.JESwitch;
+
 /**
  *
  * @author Admin
@@ -11,13 +19,39 @@ package logicverse.view;
 public class AddComponentInfo extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddComponentInfo.class.getName());
-
+    private JPanel jpanel;
+    private JEComponent component;
+    
     /**
      * Creates new form AddComponentInfo
      */
-    public AddComponentInfo(java.awt.Frame parent, boolean modal) {
+    public AddComponentInfo(java.awt.Frame parent, JPanel jpanel, String component, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.jpanel = jpanel;
+        this.component = null;
+        setTitle("Add " + component + " Component");
+        // MINIX
+        System.out.println("Component Name = " + component);
+        switch(component) {
+            case "AND":
+                this.component = new JEAND();
+                break;
+            case "OR":
+                this.component = new JEOR();
+                break;
+            case "NOT":
+                this.component = new JENOT();
+                break;
+            case "Binary Probe":
+                this.component = new JEProbe();
+                break;
+            case "Binary Switch":
+                this.component = new JESwitch();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -33,12 +67,14 @@ public class AddComponentInfo extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        addCompToPanel = new javax.swing.JButton();
+        YAxisPos = new javax.swing.JTextField();
+        XAxixPos = new javax.swing.JTextField();
+        CompName = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
+        setResizable(false);
 
         jLabel1.setText("Name");
 
@@ -49,7 +85,12 @@ public class AddComponentInfo extends javax.swing.JDialog {
 
         jLabel4.setText("Y");
 
-        jButton1.setText("Add Component");
+        addCompToPanel.setText("Add Component");
+        addCompToPanel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCompToPanelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,23 +99,23 @@ public class AddComponentInfo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addCompToPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3))
+                        .addComponent(CompName))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(XAxixPos, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(YAxisPos, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -83,22 +124,36 @@ public class AddComponentInfo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(CompName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                    .addComponent(YAxisPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(XAxixPos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addCompToPanel)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addCompToPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCompToPanelActionPerformed
+        int x = Integer.parseInt(XAxixPos.getText());
+        int y = Integer.parseInt(YAxisPos.getText());
+        int w = component.getPreferredSize().width;
+        int h = component.getPreferredSize().height;
+        component.component.setName(CompName.getText());
+        jpanel.add(component);
+        component.setBounds(x, y, w, h);
+        jpanel.revalidate();
+        jpanel.repaint();
+        dispose();
+    }//GEN-LAST:event_addCompToPanelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,7 +180,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                AddComponentInfo dialog = new AddComponentInfo(new javax.swing.JFrame(), true);
+                AddComponentInfo dialog = new AddComponentInfo(new javax.swing.JFrame(), null, null, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -138,13 +193,13 @@ public class AddComponentInfo extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField CompName;
+    private javax.swing.JTextField XAxixPos;
+    private javax.swing.JTextField YAxisPos;
+    private javax.swing.JButton addCompToPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
