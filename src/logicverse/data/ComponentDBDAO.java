@@ -142,11 +142,12 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 stmt.setString(2, Aid);
                 try{
                     stmt.executeUpdate();
-                }
-                catch(SQLException ex){
-                    // if not Integrity Constraint Violation
-                    if(!ex.getSQLState().equals("23000"))
+                } 
+                catch (SQLException ex) {
+                    // SQLite constraint violation (duplicate row)
+                    if (ex.getErrorCode() != 19) {  // ignore UNIQUE / PRIMARY KEY constraint
                         throw ex; 
+                    }
                 }
             }
         } catch (SQLException ex) {

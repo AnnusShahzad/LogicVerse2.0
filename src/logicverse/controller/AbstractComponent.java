@@ -307,7 +307,8 @@ public abstract class AbstractComponent implements Component {
     public void addConnection(Point i) {
         Point in = Outputs.get(0);
         Connections.add(new Connection(in, i));
-        Components.add(i.getParent());
+        if(!Components.contains(i.getParent()))
+            Components.add(i.getParent());
     }
     
     /**
@@ -317,7 +318,8 @@ public abstract class AbstractComponent implements Component {
      */
     public void addConnection(Point i, Point o) {
         Connections.add(new Connection(i, o));
-        Components.add(o.getParent());
+         if(!Components.contains(i.getParent()))
+            Components.add(o.getParent());
     }
     
     /**
