@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.controller.AbstractComponent;
 import logicverse.controller.Component;
-import logicverse.controller.Point;
+import logicverse.controller.Connection;
 import logicverse.data.CircuitDBDAO;
 import logicverse.data.IDAO;
 
@@ -44,7 +44,7 @@ public class Circuit {
      */
     public Circuit() {
         ID = UUID.randomUUID().toString();
-        Name = "";
+        Name = "Untitled";
         Components = new ArrayList<>();
     }
 
@@ -59,6 +59,9 @@ public class Circuit {
         load();
     }
     
+    public String toString() {
+        return Name;
+    }
     
     
     /**
@@ -140,6 +143,7 @@ public class Circuit {
         for(Component cmp: Components){
             System.out.println("=================");
             System.out.println(cmp);
+            ((AbstractComponent)cmp).Connections = Connection.loadAll(cmp);
             System.out.println("=================");
         }
         System.out.println("after loading associated componenets");

@@ -10,9 +10,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.NOT;
-import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Component;
 
 /**
  *
@@ -25,6 +25,9 @@ public class JENOT extends JEDraggableComponent {
     
     public JENOT() {
         super(new NOT());
+    }
+    public JENOT(Component c) {
+        super(c);
     }
     
     @Override

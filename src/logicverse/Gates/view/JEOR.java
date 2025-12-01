@@ -9,6 +9,7 @@ import java.awt.geom.Path2D;
 import logicverse.Gates.controller.OR;
 import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Component;
 
 /**
  *
@@ -23,6 +24,9 @@ public class JEOR extends JEDraggableComponent {
 
     public JEOR() {
         super(new OR());
+    }
+    public JEOR(Component c) {
+        super(c);
     }
 
     @Override

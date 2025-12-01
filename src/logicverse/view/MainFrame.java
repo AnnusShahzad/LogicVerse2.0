@@ -12,6 +12,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import logicverse.Gates.controller.Circuit;
@@ -30,6 +31,7 @@ public class MainFrame extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainFrame.class.getName());
     private JEComponent selectedComponent;
+    private Circuit selectedCircuit;
     private Circuit circuit;
     private Canvas canvas;
     /**
@@ -37,22 +39,18 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         selectedComponent = null;
+        selectedCircuit = null;
         circuit = new Circuit();
         canvas = new Canvas(circuit);
-        GroupLayout mainPanelLayout = new javax.swing.GroupLayout(canvas);
-        canvas.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
         getContentPane().add(canvas, java.awt.BorderLayout.CENTER);
-        add(canvas, BorderLayout.CENTER);
+//        add(canvas, BorderLayout.CENTER);
+        String[] t = {"T1", "T2"};
+//        logger.info("Circuit Found at Init = " + circuitlist.length);
+//        circuitList = new JList<String>(t);
         initComponents();
         setTitle("Untitled - LogicVerse 26");
+        circuitList.setListData(Circuit.loadAll().toArray(new Circuit[0]));
+        //Circuit[] circuitlist = Circuit.loadAll().toArray(new Circuit[0]);
     }
 
     /**
@@ -78,7 +76,8 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         circuitList = new javax.swing.JList<>();
-        loadCircuitBtn = new javax.swing.JButton();
+        refreshListBtn = new javax.swing.JButton();
+        loadCircuitBtn1 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         newCircuitBtn = new javax.swing.JMenuItem();
@@ -162,13 +161,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         circuitList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         circuitList.setDoubleBuffered(true);
+        circuitList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                circuitListValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(circuitList);
 
-        loadCircuitBtn.setText("Load Circuit");
-        loadCircuitBtn.setDoubleBuffered(true);
-        loadCircuitBtn.addActionListener(new java.awt.event.ActionListener() {
+        refreshListBtn.setText("Refresh");
+        refreshListBtn.setDoubleBuffered(true);
+        refreshListBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadCircuitBtnActionPerformed(evt);
+                refreshListBtnActionPerformed(evt);
+            }
+        });
+
+        loadCircuitBtn1.setText("Load Circuit");
+        loadCircuitBtn1.setDoubleBuffered(true);
+        loadCircuitBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadCircuitBtn1ActionPerformed(evt);
             }
         });
 
@@ -180,23 +192,25 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(componentPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(repaintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(exportPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(loadCircuitBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(rightPanelLayout.createSequentialGroup()
                         .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1)
+                                .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(repaintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(exportPNG, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(refreshListBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(loadCircuitBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         rightPanelLayout.setVerticalGroup(
@@ -225,7 +239,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loadCircuitBtn)
+                .addComponent(refreshListBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loadCircuitBtn1)
                 .addGap(0, 7, Short.MAX_VALUE))
         );
 
@@ -244,6 +260,11 @@ public class MainFrame extends javax.swing.JFrame {
 
         saveCircuitBtn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         saveCircuitBtn.setText("Save Circuit");
+        saveCircuitBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveCircuitBtnActionPerformed(evt);
+            }
+        });
         jMenu1.add(saveCircuitBtn);
         jMenu1.add(jSeparator1);
 
@@ -363,9 +384,11 @@ public class MainFrame extends javax.swing.JFrame {
         g.dispose();
     }//GEN-LAST:event_exportPNGActionPerformed
 
-    private void loadCircuitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadCircuitBtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loadCircuitBtnActionPerformed
+    private void refreshListBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshListBtnActionPerformed
+        circuitList.setListData(Circuit.loadAll().toArray(new Circuit[0]));
+//        circuitList = new JList<Circuit>(Circuit.loadAll().toArray(new Circuit[0]));
+//        logger.info("Circuit Found at Refresh = " + ctL.length);
+    }//GEN-LAST:event_refreshListBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         dispose();
@@ -389,6 +412,26 @@ public class MainFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Circuit renamed Successfully");
         setTitle(circuit.getName() + " - LogicVerse 26");
     }//GEN-LAST:event_changeCircuitNameBtnActionPerformed
+
+    private void saveCircuitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveCircuitBtnActionPerformed
+        circuit.save();
+    }//GEN-LAST:event_saveCircuitBtnActionPerformed
+
+    private void loadCircuitBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadCircuitBtn1ActionPerformed
+        if(selectedCircuit == null) {
+            JOptionPane.showMessageDialog(this, "Please Select a Circuit to Load");
+            return;
+        }
+        circuit = selectedCircuit;
+        circuit.load();
+        canvas.changeCircuit(circuit);
+        canvas.recreate();
+        setTitle(circuit.getName() + " - LogicVerse 26");
+    }//GEN-LAST:event_loadCircuitBtn1ActionPerformed
+
+    private void circuitListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_circuitListValueChanged
+        selectedCircuit = circuitList.getSelectedValue();
+    }//GEN-LAST:event_circuitListValueChanged
 
     /**
      * @param args the command line arguments
@@ -419,7 +462,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton ConnectComponentBtn;
     private javax.swing.JButton addComponentBtn;
     private javax.swing.JMenuItem changeCircuitNameBtn;
-    private javax.swing.JList<String> circuitList;
+    private javax.swing.JList<Circuit> circuitList;
     private javax.swing.JList<String> componentList;
     private javax.swing.JPanel componentPreview;
     private javax.swing.JMenuItem exitBtn;
@@ -435,8 +478,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JButton loadCircuitBtn;
+    private javax.swing.JButton loadCircuitBtn1;
     private javax.swing.JMenuItem newCircuitBtn;
+    private javax.swing.JButton refreshListBtn;
     private javax.swing.JButton repaintBtn;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JMenuItem saveCircuitBtn;

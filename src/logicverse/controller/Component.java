@@ -5,6 +5,7 @@
 package logicverse.controller;
 
 import logicverse.Gates.model.JEComponent;
+import logicverse.model.Position;
 
 /**
  * Component is the Electrical Component on the Circuit Diagram
@@ -98,4 +99,9 @@ public interface Component {
      * @param c Component Container
      */
     public void setContainer(JEComponent c);
+    /**
+     * Gets the Position of the Component
+     * @return Position Object
+     */
+    public Position getPosition();
 }

@@ -11,8 +11,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.Switch;
 import logicverse.Gates.model.JEClickableComponent;
-import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Component;
 
 /**
  *
@@ -25,6 +25,9 @@ public class JESwitch extends JEClickableComponent {
     
     public JESwitch() {
         super(new Switch());
+    }
+    public JESwitch(Component c) {
+        super(c);
     }
     
     public Dimension getPreferredSize() {

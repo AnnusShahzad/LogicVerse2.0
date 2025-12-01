@@ -12,8 +12,7 @@ import java.awt.Graphics2D;
 import logicverse.Gates.controller.AND;
 import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
-import logicverse.controller.Connection;
-import logicverse.model.Position;
+import logicverse.controller.Component;
 
 /**
  *
@@ -27,6 +26,9 @@ public class JEAND extends JEDraggableComponent {
     final int disp_y = 0;
     public JEAND() {
         super(new AND());
+    }
+    public JEAND(Component c) {
+        super(c);
     }
 
     @Override

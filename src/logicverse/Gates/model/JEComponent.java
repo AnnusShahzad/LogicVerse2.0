@@ -5,12 +5,10 @@
 package logicverse.Gates.model;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JComponent;
 import logicverse.controller.Component;
 import logicverse.controller.Drawable;
+import logicverse.model.Position;
 
 /**
  * The Parent Class of all the View Components
@@ -32,6 +30,9 @@ public abstract class JEComponent extends JComponent implements Drawable {
     public JEComponent(Component obj) {
         component = obj;
         component.setContainer(this);
+        logicverse.model.Position p = ((Position)component.getPosition());
+        setLocation(p.getX(), p.getY());
+        setSize(getPreferredSize());
     }
     
     /**

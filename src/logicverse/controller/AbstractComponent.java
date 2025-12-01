@@ -107,7 +107,7 @@ public abstract class AbstractComponent implements Component {
         container = null;
     }
 
-    public AbstractComponent( Position Location, String Cid, String name, String internalName) {
+    public AbstractComponent(Position Location, String Cid, String name, String internalName) {
         this.Location = Location;
         this.Cid = Cid;
         this.name = name;
@@ -115,7 +115,7 @@ public abstract class AbstractComponent implements Component {
         this.Inputs = Point.loadAll(this, "Input");
         this.Outputs = Point.loadAll(this, "Output");
         this.Components = new ArrayList<>();
-        this.Connections = Connection.loadAll(this);
+       //this.Connections = Connection.loadAll(this);
     }
     
     public void incrementCount() {
@@ -427,7 +427,7 @@ public abstract class AbstractComponent implements Component {
                     c =  new NOT(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
                     break;
                 case "Binary Switch":
-                    c =  new Switch(loc,d.get("Cid"),d.get("Name"),d.get("internalName"),d.get("clicked").equals(1));
+                    c =  new Switch(loc,d.get("Cid"),d.get("Name"),d.get("internalName"),d.get("clicked").equals("1"));
                     break;
                 default:
                     c =  new Probe(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
@@ -466,6 +466,14 @@ public abstract class AbstractComponent implements Component {
         for(Component c : Components)
             AsCids.add(c.getCid());
         return dbdao.saveAssociations(Cid, AsCids);
+    }
+
+    /**
+     * Gets the Position of the Component
+     * @return Position Object
+     */
+    public Position getPosition() {
+        return Location;
     }
     
 }

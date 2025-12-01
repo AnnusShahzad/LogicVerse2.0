@@ -66,7 +66,7 @@ public class Point {
      */
     public Point(String Pid, String name, boolean bit, int degree, Component parent, Position pos) {
         this.Pid = Pid;
-        this.name = parent.getName() + name;
+        this.name = name;
         this.bit = bit;
         this.degree = degree;
         this.parent = parent;
@@ -80,7 +80,7 @@ public class Point {
      */
     public Point(String name, Component parent) {
         this.Pid = UUID.randomUUID().toString();
-        this.name = parent.getName() + name;
+        this.name = name;
         this.parent = parent;
         this.position = new Position();
     }
@@ -164,7 +164,7 @@ public class Point {
      */
     public String toString() {
 //        return String.valueOf(bit);
-        return name;
+        return parent.getName() + name;
     }
     
     // dao funictions

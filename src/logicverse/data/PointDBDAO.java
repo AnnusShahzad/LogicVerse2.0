@@ -122,9 +122,9 @@ public class PointDBDAO extends AbstractDBDAO{
         stmt.setString(3,data.get("bit"));
         stmt.setString(4,data.get("degree"));
         stmt.setString(5,data.get("type"));
-        stmt.setString(6,data.get("Pid"));
-        stmt.setString(7, data.get("PosX"));
-        stmt.setString(8, data.get("PosY"));
+        stmt.setString(6, data.get("PosX"));
+        stmt.setString(7, data.get("PosY"));
+        stmt.setString(8,data.get("Pid"));
         return stmt;
     }
     private PreparedStatement insertStatement(Connection conn,Hashtable<String,String> data) throws SQLException{

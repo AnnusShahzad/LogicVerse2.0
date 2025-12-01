@@ -158,6 +158,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         this.circuit.addComponent(component.component);
         jpanel.add(component);
         component.setBounds(x, y, w, h);
+        component.component.setLocation(x, y);
         jpanel.revalidate();
         jpanel.repaint();
         component.component.incrementCount();

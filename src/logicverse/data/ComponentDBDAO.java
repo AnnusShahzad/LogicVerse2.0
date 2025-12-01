@@ -67,11 +67,12 @@ public class ComponentDBDAO extends AbstractDBDAO {
             PreparedStatement stmt = selectSingleStatement(conn, params.get("Cid"));
             ResultSet rs = stmt.executeQuery();
 
-            data.put("Name", rs.getString("Name"));
-            data.put("internalName", rs.getString("internalName"));
-            data.put("PosX", String.valueOf(rs.getString("PosX")));
-            data.put("PosY", String.valueOf(rs.getString("PosY")));
-
+            if (rs.next()) {
+                data.put("Name", rs.getString("Name"));
+                data.put("internalName", rs.getString("internalName"));
+                data.put("PosX", String.valueOf(rs.getString("PosX")));
+                data.put("PosY", String.valueOf(rs.getString("PosY")));
+            }
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());

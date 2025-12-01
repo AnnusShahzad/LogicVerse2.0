@@ -12,6 +12,7 @@ import java.awt.Graphics2D;
 import logicverse.Gates.controller.Probe;
 import logicverse.Gates.model.JEDraggableComponent;
 import logicverse.controller.AbstractComponent;
+import logicverse.controller.Component;
 
 /**
  *
@@ -24,6 +25,9 @@ public class JEProbe extends JEDraggableComponent {
     
     public JEProbe() {
         super(new Probe());
+    }
+    public JEProbe(Component c) {
+        super(c);
     }
     
     public void paintComponent(Graphics g) {
