@@ -23,7 +23,6 @@ public class JESwitch extends JEDraggableComponent {
     
     public JESwitch() {
         super(new Switch());
-        
     }
     
     public Dimension getPreferredSize() {

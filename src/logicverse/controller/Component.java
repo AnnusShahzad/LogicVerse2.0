@@ -63,4 +63,9 @@ public interface Component {
      * @param name New Name of the Component
      */
     public void setName(String name);
+    /**
+     * Increments the Component Count
+     * USAGE: Component Counts is used to generate Unique Short Names
+     */
+    public void incrementCount();
 }

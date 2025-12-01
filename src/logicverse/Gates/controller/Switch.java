@@ -16,7 +16,10 @@ import logicverse.controller.Point;
 public class Switch extends ClickableComponent {
     public Switch() {
         internalName = "Binary Switch";
+        shortName = "SW";
+        name = shortName + getCount(this.getClass());
         Outputs.add(new Point("Switch X1", this));
+//        incrementCount(this.getClass());
     }
     @Override
     protected void onClick() {
