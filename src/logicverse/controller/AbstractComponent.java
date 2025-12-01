@@ -17,7 +17,6 @@ public abstract class AbstractComponent implements Component {
     protected Position Location;
     protected ArrayList<Component> Components;
     protected ArrayList<Connection> Connections;
-    
     /**
      * Name of the Component
      */
