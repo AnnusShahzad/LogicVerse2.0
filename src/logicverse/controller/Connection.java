@@ -9,8 +9,8 @@ package logicverse.controller;
  * @author Admin
  */
 public class Connection {
-    Point Input;
-    Point Output;
+    public Point Input;
+    public Point Output;
     public Connection(Point a, Point b) {
         Input = a;
         Output = b;

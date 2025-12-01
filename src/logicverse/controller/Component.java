@@ -68,4 +68,8 @@ public interface Component {
      * USAGE: Component Counts is used to generate Unique Short Names
      */
     public void incrementCount();
+    /**
+     * to Strings
+     */
+    public String toString();
 }

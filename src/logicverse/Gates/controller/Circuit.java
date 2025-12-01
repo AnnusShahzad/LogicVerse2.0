@@ -5,7 +5,12 @@
 package logicverse.Gates.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import logicverse.controller.AbstractComponent;
 import logicverse.controller.Component;
+import logicverse.controller.Point;
+
 
 /**
  *
@@ -16,18 +21,31 @@ public class Circuit {
     private String ID;
     private String Name;
 
+    public Circuit() {
+        Components = new ArrayList<>();
+    }
+    
     /**
      * @return the Components
      */
-    public ArrayList<Component> getComponents() {
+    public List<Component> getComponents() {
         return Components;
     }
 
     /**
-     * @param Components the Components to set
+     * Adds a Component to the List of Global Components
+     * @param c 
      */
-    public void setComponents(ArrayList<Component> Components) {
-        this.Components = Components;
+    public void addComponent(Component c) {
+        Components.add(c);
+    }
+    
+    public List<Component> getComponentWithOutputs() {
+        return Components.stream().filter(it -> ((AbstractComponent)it).hasOutputs()).collect(Collectors.toList());
+    }
+    
+    public List<Component> getComponentWithFreeInputs() {
+        return Components.stream().filter(it -> ((AbstractComponent)it).hasFreeInputs()).collect(Collectors.toList());
     }
 
     /**

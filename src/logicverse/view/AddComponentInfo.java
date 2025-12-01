@@ -5,6 +5,7 @@
 package logicverse.view;
 
 import javax.swing.JPanel;
+import logicverse.Gates.controller.Circuit;
 import logicverse.Gates.model.JEComponent;
 import logicverse.Gates.view.JEAND;
 import logicverse.Gates.view.JENOT;
@@ -21,11 +22,12 @@ public class AddComponentInfo extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AddComponentInfo.class.getName());
     private JPanel jpanel;
     private JEComponent component;
+    private Circuit circuit;
     
     /**
      * Creates new form AddComponentInfo
      */
-    public AddComponentInfo(java.awt.Frame parent, JPanel jpanel, String component, boolean modal) {
+    public AddComponentInfo(java.awt.Frame parent, Circuit circuit, JPanel jpanel, String component, boolean modal) {
         super(parent, modal);
         initComponents();
         this.jpanel = jpanel;
@@ -52,6 +54,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
             default:
                 break;
         }
+        this.circuit = circuit;
         CompName.setText(this.component.component.getName());
     }
 
@@ -149,6 +152,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         int w = component.getPreferredSize().width;
         int h = component.getPreferredSize().height;
         component.component.setName(CompName.getText());
+        this.circuit.addComponent(component.component);
         jpanel.add(component);
         component.setBounds(x, y, w, h);
         jpanel.revalidate();
@@ -182,7 +186,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                AddComponentInfo dialog = new AddComponentInfo(new javax.swing.JFrame(), null, null, true);
+                AddComponentInfo dialog = new AddComponentInfo(new javax.swing.JFrame(), null, null, null, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
