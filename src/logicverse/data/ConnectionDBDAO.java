@@ -43,7 +43,7 @@ public class ConnectionDBDAO extends AbstractDBDAO {
         int count = 0;
         try{
             Connection conn = getConnection();
-            PreparedStatement stmt = deleteStatement(conn,params.get("Id"));
+            PreparedStatement stmt = deleteStatement(conn,params.get("ConnectionId"));
             count = stmt.executeUpdate();            
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
@@ -59,12 +59,14 @@ public class ConnectionDBDAO extends AbstractDBDAO {
         Hashtable<String,String> data = new Hashtable<String,String>();
         try{            
             Connection conn = getConnection();
-            PreparedStatement stmt = selectSingleStatement(conn,params.get("Id"));
+            PreparedStatement stmt = selectSingleStatement(conn,params.get("ConnectionId"));
             ResultSet rs = stmt.executeQuery();
                     
-            while (rs.next()){                
-                data.put("Id", rs.getString("Id"));
-                data.put("Name", rs.getString("Name"));              
+            if (rs.next()){                
+                data.put("ConnectionId", rs.getString("ConnectionId"));
+                data.put("Cid", rs.getString("Cid"));
+                data.put("inputPointId", rs.getString("inputPointId"));
+                data.put("outputPointId", rs.getString("outputPointId"));
             }        
         } catch(SQLException ex){
             System.out.println("SQLException: " + ex.getMessage());
@@ -78,16 +80,17 @@ public class ConnectionDBDAO extends AbstractDBDAO {
     public ArrayList<Hashtable<String,String>> loadAll(Hashtable<String, String> params){
         ArrayList<Hashtable<String,String>> data = new ArrayList<>();
         
-        String query = "select Id,Name from Project";
+        String query = "select ConnectionId, Cid, inputPointId, outputPointId from Connection";
         try {
           Connection conn = getConnection();
           Statement stmt = conn.createStatement();
           ResultSet rs = stmt.executeQuery(query);
           while (rs.next()) {
             Hashtable<String,String> o = new Hashtable<>();
-            o.put("Id",rs.getString("Id"));
-            o.put("Name",rs.getString("Name"));
-            
+            o.put("ConnectionId", rs.getString("ConnectionId"));
+            o.put("Cid", rs.getString("Cid"));
+            o.put("inputPointId", rs.getString("inputPointId"));
+            o.put("outputPointId", rs.getString("outputPointId"));
             data.add(o);
           }
         } catch (SQLException ex) {
@@ -100,33 +103,37 @@ public class ConnectionDBDAO extends AbstractDBDAO {
     }
     
     private PreparedStatement updateStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "update Project set Name = ? where Id = ?";
+        String query = "update Connection set Cid = ?, inputPointId = ?, outputPointId = ? where ConnectionId = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
-        stmt.setString(1,data.get("Name"));
-        stmt.setString(2,data.get("Id"));
+        stmt.setString(1, data.get("Cid"));
+        stmt.setString(2, data.get("inputPointId"));
+        stmt.setString(3, data.get("outputPointId"));
+        stmt.setString(4, data.get("ConnectionId"));
         return stmt;
     }
     private PreparedStatement insertStatement(Connection conn,Hashtable<String,String> data) throws SQLException{
-        String query = "insert into Project(Id,Name) values(?,?);";
+        String query = "insert into Connection(ConnectionId, Cid, inputPointId, outputPointId) values(?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
         
-        stmt.setString(1,data.get("Id"));
-        stmt.setString(2,data.get("Name"));
+        stmt.setString(1, data.get("ConnectionId"));
+        stmt.setString(2, data.get("Cid"));
+        stmt.setString(3, data.get("inputPointId"));
+        stmt.setString(4, data.get("outputPointId"));
         
         return stmt;
     }
     
-    private PreparedStatement selectSingleStatement(Connection conn,String id) throws SQLException{
-        String query = "select Id,Name from Project where Id = ?";
+    private PreparedStatement selectSingleStatement(Connection conn,String connectionId) throws SQLException{
+        String query = "select ConnectionId, Cid, inputPointId, outputPointId from Connection where ConnectionId = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
-        stmt.setString(1,id);
+        stmt.setString(1, connectionId);
         return stmt;
     }
     
-    private PreparedStatement deleteStatement(Connection conn,String id) throws SQLException{
-        String query = "delete from Project where Id = ?";
+    private PreparedStatement deleteStatement(Connection conn,String connectionId) throws SQLException{
+        String query = "delete from Connection where ConnectionId = ?";
         PreparedStatement stmt = conn.prepareStatement(query);        
-        stmt.setString(1,id);
+        stmt.setString(1, connectionId);
         return stmt;
     }
 }

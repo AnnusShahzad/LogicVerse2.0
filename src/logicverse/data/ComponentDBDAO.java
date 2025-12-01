@@ -115,14 +115,15 @@ public class ComponentDBDAO extends AbstractDBDAO {
     }
 
     private PreparedStatement insertStatement(Connection conn, Hashtable<String, String> data) throws SQLException {
-        String query = "insert into Component(Cid,Name,internalName,PosX,PosY) values(?,?,?,?,?)";
+        String query = "insert into Component(CIRid, Cid,Name,internalName,PosX,PosY) values(?,?,?,?,?,?)";
         PreparedStatement stmt = conn.prepareStatement(query);
 
-        stmt.setString(1, data.get("Cid"));
-        stmt.setString(2, data.get("Name"));
-        stmt.setString(3, data.get("internalName"));
-        stmt.setString(4, data.get("PosX"));
-        stmt.setString(5, data.get("PosY"));
+        stmt.setString(1, data.get("CIRid"));
+        stmt.setString(2, data.get("Cid"));
+        stmt.setString(3, data.get("Name"));
+        stmt.setString(4, data.get("internalName"));
+        stmt.setString(5, data.get("PosX"));
+        stmt.setString(6, data.get("PosY"));
 
         return stmt;
     }
