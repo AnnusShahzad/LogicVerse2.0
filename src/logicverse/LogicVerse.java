@@ -55,7 +55,7 @@ public class LogicVerse {
                 switches.get(1).execute();
             }
             switches.get(1).click();
-        }
+        }  
     }
     
 }
