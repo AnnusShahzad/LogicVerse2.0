@@ -15,9 +15,12 @@ import logicverse.controller.Point;
 public class AND extends AbstractComponent {
     public AND() {
         internalName = "AND";
+        shortName = internalName;
+        name = shortName + getCount(this.getClass());
         Inputs.add(new Point("X1", this));
         Inputs.add(new Point("X2", this));
         Outputs.add(new Point("Y1", this));
+//        incrementCount(this.getClass());
     }
     public void onExecute() {
         boolean result = true;
