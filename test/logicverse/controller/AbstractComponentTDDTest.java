@@ -1,9 +1,10 @@
 package logicverse.controller;
 
-import logicverse.Gates.controller.Switch;
-import logicverse.Gates.controller.Probe;
-import logicverse.Gates.controller.AND;
-import logicverse.Gates.controller.OR;
+import logicverse.domain.controller.Point;
+import logicverse.domain.gates.controller.Switch;
+import logicverse.domain.gates.controller.Probe;
+import logicverse.domain.gates.controller.AND;
+import logicverse.domain.gates.controller.OR;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

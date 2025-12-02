@@ -4,7 +4,7 @@
  */
 package logicverse.components;
 
-import logicverse.Gates.controller.Switch;
+import logicverse.domain.gates.controller.Switch;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

@@ -4,7 +4,7 @@
  */
 package logicverse.components;
 
-import logicverse.Gates.controller.OR;
+import logicverse.domain.gates.controller.OR;
 import static org.junit.Assert.*;
 
 import java.beans.Transient;

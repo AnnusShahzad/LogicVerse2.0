@@ -1,9 +1,9 @@
 package logicverse.controller;
 
-import logicverse.Gates.controller.Switch;
-import logicverse.Gates.controller.Probe;
-import logicverse.controller.Connection;
-import logicverse.controller.Point;
+import logicverse.domain.gates.controller.Switch;
+import logicverse.domain.gates.controller.Probe;
+import logicverse.domain.controller.Connection;
+import logicverse.domain.controller.Point;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;

@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 /**
  *
  * @author zohaib
  */
 public class ComponentDBDAO extends AbstractDBDAO {
+    private static final Logger logger = Logger.getLogger(ComponentDBDAO.class.getName());
 
     @Override
     public boolean save(Hashtable<String, String> data) {
@@ -34,9 +36,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
                     insertClickedStatement(conn, data).executeUpdate();
             }
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
             return false;
         }
         return count > 0 ;
@@ -51,9 +53,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
             count = stmt.executeUpdate();
             deleteCLickedStatement(conn, params.get("Cid")).executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
             return false;
         }
         return count > 0 ;
@@ -74,9 +76,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 data.put("PosY", String.valueOf(rs.getString("PosY")));
             }
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
         }
         return data;
     }
@@ -103,9 +105,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 data.add(o);
             }
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
         }
 
         return data;
@@ -124,9 +126,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
             }
 
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
         }
         return data;
     }
@@ -151,9 +153,9 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 }
             }
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
             return false;
         }
         return true;

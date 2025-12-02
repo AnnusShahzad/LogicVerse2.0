@@ -11,12 +11,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 /**
  *
  * @author zohaib
  */
 public class CircuitDBDAO extends AbstractDBDAO{
+    private static final Logger logger = Logger.getLogger(CircuitDBDAO.class.getName());
      @Override
     public boolean save(Hashtable<String,String> data){
         int count = 0;
@@ -29,9 +31,9 @@ public class CircuitDBDAO extends AbstractDBDAO{
                 count = stmt.executeUpdate();            
             }                        
         } catch(SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
             return false;
         }
         return count > 0 ? true : false;
@@ -45,9 +47,9 @@ public class CircuitDBDAO extends AbstractDBDAO{
             PreparedStatement stmt = deleteStatement(conn,params.get("CIRid"));
             count = stmt.executeUpdate();            
         } catch(SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
             return false;
         }
         return count > 0 ? true : false;
@@ -66,9 +68,9 @@ public class CircuitDBDAO extends AbstractDBDAO{
                 data.put("Name", rs.getString("Name"));              
             }        
         } catch(SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage());
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
         }
         return data;
     }
@@ -90,9 +92,9 @@ public class CircuitDBDAO extends AbstractDBDAO{
             data.add(o);
           }
         } catch (SQLException ex) {
-            System.out.println("SQLException: " + ex.getMessage()); 
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            logger.severe("SQLException: " + ex.getMessage()); 
+            logger.severe("SQLState: " + ex.getSQLState());
+            logger.severe("VendorError: " + ex.getErrorCode());
         }
         
         return data;
