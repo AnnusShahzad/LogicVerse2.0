@@ -140,4 +140,22 @@ public abstract class AbstractComponent implements Component {
         Connections.add(new Connection(i, o));
         Components.add(o.getParent());
     }
+    
+    public Point getOutputPoint(String pointId){
+        for(Point o: this.Outputs){
+            if(o.getPid().equals(pointId)){
+                return o;
+            }
+        }
+        return null;
+    }
+    
+     public Point getInputPoint(String pointId){
+        for(Point p: this.Inputs){
+            if(p.getPid().equals(pointId)){
+                return p;
+            }
+        }
+        return null;
+    }
 }

@@ -80,15 +80,15 @@ public class ConnectionDBDAO extends AbstractDBDAO {
     public ArrayList<Hashtable<String,String>> loadAll(Hashtable<String, String> params){
         ArrayList<Hashtable<String,String>> data = new ArrayList<>();
         
-        String query = "select ConnectionId, Cid, inputPointId, outputPointId from Connection";
+        String query = "select ConnectionId, inputPointId, outputPointId from Connection where Cid = ?;";
         try {
-          Connection conn = getConnection();
-          Statement stmt = conn.createStatement();
-          ResultSet rs = stmt.executeQuery(query);
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(query);        
+            stmt.setString(1,params.get("Cid"));
+            ResultSet rs = stmt.executeQuery();
           while (rs.next()) {
             Hashtable<String,String> o = new Hashtable<>();
             o.put("ConnectionId", rs.getString("ConnectionId"));
-            o.put("Cid", rs.getString("Cid"));
             o.put("inputPointId", rs.getString("inputPointId"));
             o.put("outputPointId", rs.getString("outputPointId"));
             data.add(o);

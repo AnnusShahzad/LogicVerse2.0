@@ -78,7 +78,6 @@ public class Point {
         if (data == null || data.isEmpty()){
             return false;
         }
-        this.Pid = data.get("pid");
         this.name = data.get("Name");
         this.bit = (Integer.parseInt(data.get("bit")) == 1)? true:false;
         this.degree = Integer.parseInt(data.get("degree"));
@@ -111,15 +110,15 @@ public class Point {
         return dao.save(data);
     }
     /**
-     * 
-     * @param c Parent component
+     * Get all Point associated with a Componenet
+     * @param parent Parent component
      * @param Type of points (Input or Output)
      * @return ArrayList of p
      */
-    public static ArrayList<Point> loadAll(AbstractComponent c, String Type){
+    public static ArrayList<Point> loadAll(Component parent, String Type){
         ArrayList<Point> res = new ArrayList<>();
         Hashtable<String,String> params = new Hashtable<>();
-        params.put("Cid", c.getCid());
+        params.put("Cid", parent.getCid());
         params.put("type", Type);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
@@ -128,7 +127,7 @@ public class Point {
                     d.get("Name"),
                     (Integer.valueOf(d.get("bit"))== 1)?true:false,
                     Integer.valueOf(d.get("degree")),
-                    c
+                    parent
             );
             res.add(p);
         }

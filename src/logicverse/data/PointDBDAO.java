@@ -62,8 +62,7 @@ public class PointDBDAO extends AbstractDBDAO{
             PreparedStatement stmt = selectSingleStatement(conn,params.get("Pid"));
             ResultSet rs = stmt.executeQuery();
                     
-            while (rs.next()){                
-                data.put("Pid",rs.getString("Pid"));
+            while (rs.next()){
                 data.put("Cid",rs.getString("Cid"));
                 data.put("Name",rs.getString("Name"));
                 data.put("bit",rs.getString("bit"));
