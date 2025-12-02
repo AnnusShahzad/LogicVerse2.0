@@ -13,19 +13,35 @@ import logicverse.controller.Point;
 
 
 /**
- *
+ * Circuit Class for managing Circuits
  * @author Admin
  */
 public class Circuit {
+    /**
+     * List of Circuit Components
+     */
     private ArrayList<Component> Components;
+    /**
+     * Circuit ID
+     * USAGE: Used in Storing in Database and for O(1) Query
+     */
     private String ID;
+    /**
+     * Circuit Name
+     * USAGE: Helps the User know the name of the Circuit
+     */
     private String Name;
 
+    /**
+     * Default Constructor
+     * Initializes the Circuit with Default Values and Initializes Arrays
+     */
     public Circuit() {
         Components = new ArrayList<>();
     }
     
     /**
+     * Gets the List of Circuit Components
      * @return the Components
      */
     public List<Component> getComponents() {
@@ -40,37 +56,45 @@ public class Circuit {
         Components.add(c);
     }
     
+    /**
+     * Gets the List of Components that have Output Points
+     * @return Components with Output Points
+     */
     public List<Component> getComponentWithOutputs() {
         return Components.stream().filter(it -> ((AbstractComponent)it).hasOutputs()).collect(Collectors.toList());
     }
     
+    /**
+     * Gets the List of Components that have Inputs Points that are free to use
+     * @return Components with free Input Points
+     */
     public List<Component> getComponentWithFreeInputs() {
         return Components.stream().filter(it -> ((AbstractComponent)it).hasFreeInputs()).collect(Collectors.toList());
     }
 
     /**
-     * @return the ID
+     * @return the Circuit ID
      */
     public String getID() {
         return ID;
     }
 
     /**
-     * @param ID the ID to set
+     * @param ID the Circuit ID to set
      */
     public void setID(String ID) {
         this.ID = ID;
     }
 
     /**
-     * @return the Name
+     * @return the Circuit Name
      */
     public String getName() {
         return Name;
     }
 
     /**
-     * @param Name the Name to set
+     * @param Name the Circuit Name to set
      */
     public void setName(String Name) {
         this.Name = Name;
