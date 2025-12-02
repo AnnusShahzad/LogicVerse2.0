@@ -4,22 +4,44 @@
  */
 package logicverse.controller;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.UUID;
+import logicverse.data.IDAO;
+import logicverse.data.PointDBDAO;
+
 /**
  *
  * @author Admin
  */
 public class Point {
+    String Pid;
     String name;
     boolean bit;
     int degree;
+    private static final IDAO dao =  new PointDBDAO();
     Component parent;
-    public Point() {
-        name = "";
-        parent = null;
+    public Point(String PointId) {
+        Pid = PointId;
+        load();
     }
+
+    public Point(String Pid, String name, boolean bit, int degree, Component parent) {
+        this.Pid = Pid;
+        this.name = name;
+        this.bit = bit;
+        this.degree = degree;
+        this.parent = parent;
+    }
+    
     public Point(String name, Component parent) {
+        this.Pid = UUID.randomUUID().toString();
         this.name = name;
         this.parent = parent;
+    }
+
+    public String getPid() {
+        return Pid;
     }
     public boolean get() {
         return bit;
@@ -41,5 +63,75 @@ public class Point {
     }
     public String toString() {
         return name;
+    }
+    
+    // dao funictions
+    /**
+     * load a point attributes from db based on it Pid
+     * @return Boolean
+     */
+     public boolean load(){
+        
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("Pid", this.Pid);
+        Hashtable<String,String> data = dao.load(params);
+        if (data == null || data.isEmpty()){
+            return false;
+        }
+        this.Pid = data.get("pid");
+        this.name = data.get("Name");
+        this.bit = (Integer.parseInt(data.get("bit")) == 1)? true:false;
+        this.degree = Integer.parseInt(data.get("degree"));
+        return true;
+    }
+    
+    
+    /**
+     * Delete a Point
+     * @return Boolean
+     */
+    public boolean delete(){
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("Pid", this.Pid);
+        return dao.delete(params);
+    }
+    /**
+     * Save a Point
+     * @param type type of point of component (Input,Output)
+     * @return Boolean
+     */
+    public boolean save(String type){
+        Hashtable<String,String> data = new Hashtable<>();
+        data.put("Pid",this.Pid);
+        data.put("Name",this.name);
+        data.put("degree",String.valueOf(this.degree));
+        data.put("Cid",this.parent.getCid());
+        data.put("type",type);
+        data.put("bit", (this.bit)?"1":"0");
+        return dao.save(data);
+    }
+    /**
+     * 
+     * @param c Parent component
+     * @param Type of points (Input or Output)
+     * @return ArrayList of p
+     */
+    public static ArrayList<Point> loadAll(AbstractComponent c, String Type){
+        ArrayList<Point> res = new ArrayList<>();
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("Cid", c.getCid());
+        params.put("type", Type);
+        ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
+        for(Hashtable<String,String> d : data){
+            Point p = new Point(
+                    d.get("Pid"),
+                    d.get("Name"),
+                    (Integer.valueOf(d.get("bit"))== 1)?true:false,
+                    Integer.valueOf(d.get("degree")),
+                    c
+            );
+            res.add(p);
+        }
+        return res;
     }
 }

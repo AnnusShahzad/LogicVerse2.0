@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.model.Position;
 
@@ -26,10 +27,12 @@ public abstract class AbstractComponent implements Component {
     /**
      * Name of the Component
      */
+    protected String Cid;
     protected String name;
     protected String shortName;
     protected String internalName;
     public AbstractComponent() {
+        Cid = UUID.randomUUID().toString();
         Inputs = new ArrayList<>();
         Outputs = new ArrayList<>();
         Location = new Position();
@@ -38,6 +41,10 @@ public abstract class AbstractComponent implements Component {
     }
     public void incrementCount() {
         counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
+    }
+
+    public String getCid() {
+        return Cid;
     }
     protected static int getCount(Class<?> cls) {
         return counters.getOrDefault(cls, 0);
