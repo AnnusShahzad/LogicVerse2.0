@@ -79,7 +79,7 @@ public class ComponentDBDAO extends AbstractDBDAO {
     public ArrayList<Hashtable<String, String>> loadAll(Hashtable<String, String> params) {
         ArrayList<Hashtable<String, String>> data = new ArrayList<>();
 
-        String query = "select * from Component where CIRid = ?;";
+        String query = "select c.Name,c.internalName,c.PosX,c.PosY,c.Cid,cc.clicked from Component c Left JOIN ClickableComponent cc on cc.Cid = c.Cid where CIRid = ?;";
         try {
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(query);        
@@ -92,6 +92,7 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 o.put("internalName", rs.getString("internalName"));
                 o.put("PosX", String.valueOf(rs.getString("PosX")));
                 o.put("PosY", String.valueOf(rs.getString("PosY")));
+                o.put("clicked", rs.getString("clicked"));
                 data.add(o);
             }
         } catch (SQLException ex) {
@@ -137,7 +138,7 @@ public class ComponentDBDAO extends AbstractDBDAO {
     }
 
     private PreparedStatement deleteStatement(Connection conn, String Cid) throws SQLException {
-        String query = "delete from Component where Cid = ?";
+        String query = "delete from Component where Cid = ?;";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, Cid);
         return stmt;

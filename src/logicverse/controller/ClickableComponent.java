@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package logicverse.controller;
+import logicverse.model.Position;
 
 /**
  *
@@ -14,6 +15,19 @@ public abstract class ClickableComponent extends AbstractComponent {
     public boolean getState() {
         return clicked;
     }
+
+    public ClickableComponent() {
+        super();
+        clicked = false;
+    }
+    
+    public ClickableComponent( Position Location, String Cid, String name, String internalName , boolean clicked) {
+        super( Location, Cid, name, internalName);
+        this.clicked = clicked;        
+    }
+    
+    
+    
     public void click() {
         clicked = !clicked;
         onClick();
