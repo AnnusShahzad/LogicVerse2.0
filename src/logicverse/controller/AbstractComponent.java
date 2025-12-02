@@ -140,7 +140,11 @@ public abstract class AbstractComponent implements Component {
         Connections.add(new Connection(i, o));
         Components.add(o.getParent());
     }
-    
+    /**
+     * search for a Point in the output Points of component
+     * @param pointId
+     * @return Point
+     */
     public Point getOutputPoint(String pointId){
         for(Point o: this.Outputs){
             if(o.getPid().equals(pointId)){
@@ -149,8 +153,12 @@ public abstract class AbstractComponent implements Component {
         }
         return null;
     }
-    
-     public Point getInputPoint(String pointId){
+    /**
+     * search for a point in the input Points of Component
+     * @param pointId
+     * @return Point
+     */
+    public Point getInputPoint(String pointId){
         for(Point p: this.Inputs){
             if(p.getPid().equals(pointId)){
                 return p;
@@ -158,4 +166,21 @@ public abstract class AbstractComponent implements Component {
         }
         return null;
     }
+     
+    /**
+     * search for a point in the input Points of all associated components
+     * @param pointId
+     * @return Point
+     */
+    public Point getInputPointFromACs(String pointId){
+        for(Component c :  this.Components){
+            AbstractComponent ac = (AbstractComponent)c;
+            Point inputPoint = ac.getInputPoint(pointId);
+            if(inputPoint != null)
+                return inputPoint;
+        }
+        return null;
+    }
+     // dao funcitons
+     
 }

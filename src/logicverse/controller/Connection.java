@@ -47,15 +47,14 @@ public class Connection {
     }
     /**
      * Save a Connection
-     * @param type type of point of component (Input,Output)
      * @return Boolean
      */
-    public boolean save(String type){
+    public boolean save(){
         Hashtable<String,String> data = new Hashtable<>();
         data.put("ConnectionId",this.ConnectionId);
         data.put("inputPointId",this.Input.getPid());
         data.put("outputPointId",this.Output.getPid());
-        data.put("Cid", this.Output.getParent().getCid());
+        data.put("Cid", this.Input.getParent().getCid());
        
         return dao.save(data);
     }
@@ -71,11 +70,10 @@ public class Connection {
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         AbstractComponent ac = (AbstractComponent)parent;
         for(Hashtable<String,String> d : data){
-            Connection c = new Connection(
-                    d.get("ConnectionId"),
-                    ac.getOutputPoint(d.get("inputPointId")),
-                    ac.getInputPoint(d.get("outputPointId"))
-            );
+            Point inPoint =  ac.getOutputPoint(d.get("inputPointId"));
+            Point outPoint =  ac.getInputPointFromACs(d.get("outputPointId"));
+            if(inPoint == null || outPoint == null) continue;
+            Connection c = new Connection(d.get("ConnectionId"), inPoint, outPoint);
             res.add(c);
         }
         return res;
