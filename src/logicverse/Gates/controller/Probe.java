@@ -26,7 +26,7 @@ public class Probe extends AbstractComponent {
     }
     
     public String toString() {
-        Point in = Inputs.get(0);
-        return in.toString();
+//        Point in = Inputs.get(0);
+        return name;
     }
 }

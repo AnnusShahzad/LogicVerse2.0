@@ -5,10 +5,8 @@
 package logicverse.controller;
 
 /**
- *
- * @author Admin
  * Component is the Electrical Component on the Circuit Diagram
- * 
+ * @author Admin
  */
 public interface Component {
     /**

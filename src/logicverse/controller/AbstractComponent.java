@@ -74,8 +74,9 @@ public abstract class AbstractComponent implements Component {
         return internalName;
     }
     public List<Point> getFreeInputs() {
-        Set<Point> points = Connections.stream().map(it -> it.Input).filter(it -> it.degree > 0).collect(Collectors.toSet());
-        return points.stream().toList();
+        List<Point> points = Inputs.stream().filter(it -> !it.isConnected()).collect(Collectors.toList());
+        System.out.println("Free Inputs: " + points.size());
+        return points;
     }
     /**
      * Returns true, If there is any Output Point of a Component

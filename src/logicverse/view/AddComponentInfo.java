@@ -27,7 +27,7 @@ public class AddComponentInfo extends javax.swing.JDialog {
     /**
      * Creates new form AddComponentInfo
      */
-    public AddComponentInfo(java.awt.Frame parent, Circuit circuit, JPanel jpanel, String component, boolean modal) {
+    public AddComponentInfo(java.awt.Frame parent, Circuit circuit, JPanel jpanel, String componentName, boolean modal) {
         super(parent, modal);
         initComponents();
         this.jpanel = jpanel;
@@ -35,21 +35,21 @@ public class AddComponentInfo extends javax.swing.JDialog {
         setTitle("Add " + component + " Component");
         // MINIX
         System.out.println("Component Name = " + component);
-        switch(component) {
+        switch(componentName) {
             case "AND":
-                this.component = new JEAND();
+                component = new JEAND();
                 break;
             case "OR":
-                this.component = new JEOR();
+                component = new JEOR();
                 break;
             case "NOT":
-                this.component = new JENOT();
+                component = new JENOT();
                 break;
             case "Binary Probe":
-                this.component = new JEProbe();
+                component = new JEProbe();
                 break;
             case "Binary Switch":
-                this.component = new JESwitch();
+                component = new JESwitch();
                 break;
             default:
                 break;
