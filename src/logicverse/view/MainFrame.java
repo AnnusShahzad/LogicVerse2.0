@@ -49,6 +49,7 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         componentList = new javax.swing.JList<>();
         ConnectComponentBtn = new javax.swing.JButton();
+        truthTableView = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -93,6 +94,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        truthTableView.setText("Truth Table");
+        truthTableView.setDoubleBuffered(true);
+        truthTableView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                truthTableViewActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
@@ -108,7 +117,8 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addComponent(jScrollPane1)
                                 .addComponent(addComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(ConnectComponentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(truthTableView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -127,6 +137,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(addComponentBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConnectComponentBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(truthTableView)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -193,6 +205,10 @@ public class MainFrame extends javax.swing.JFrame {
         new ConnectComponent(this, circuit, true).setVisible(true);
     }//GEN-LAST:event_ConnectComponentBtnActionPerformed
 
+    private void truthTableViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_truthTableViewActionPerformed
+        new AnalyzeTruthTable(this, circuit, true).setVisible(true);
+    }//GEN-LAST:event_truthTableViewActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -228,5 +244,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel rightPanel;
+    private javax.swing.JButton truthTableView;
     // End of variables declaration//GEN-END:variables
 }

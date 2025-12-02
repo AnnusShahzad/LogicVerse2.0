@@ -145,7 +145,7 @@ public class ConnectComponent extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddConnBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddConnBtnActionPerformed
-        Component c = (Component)InComps.getSelectedItem();
+        Component c = (Component)OutComps.getSelectedItem();
         Point i = (Point)OutCompPoints.getSelectedItem();
         Point o = (Point)InCompPoints.getSelectedItem();
         c.addConnection(i, o);

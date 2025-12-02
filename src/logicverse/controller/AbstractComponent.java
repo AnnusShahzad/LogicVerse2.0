@@ -25,8 +25,8 @@ public abstract class AbstractComponent implements Component {
     public ArrayList<Point> Inputs;    
     public ArrayList<Point> Outputs;
     protected Position Location;
-    protected ArrayList<Component> Components;
-    protected ArrayList<Connection> Connections;
+    public ArrayList<Component> Components;
+    public ArrayList<Connection> Connections;
     protected static final Map<Class<?>, Integer> counters = new HashMap<>();
     private static final IDAO dao = new ComponentDBDAO();
     /**
@@ -57,6 +57,10 @@ public abstract class AbstractComponent implements Component {
 
     public String getCid() {
         return Cid;
+    }
+    public String toString() {
+        return String.valueOf(Outputs.get(0).get());
+//        return name;
     }
     protected static int getCount(Class<?> cls) {
         return counters.getOrDefault(cls, 0);
@@ -108,6 +112,9 @@ public abstract class AbstractComponent implements Component {
             System.out.println(internalName + ", Point " + missPoint + " Not Connected");
             return;
         }
+        System.out.println("Called Execute of " + this.name);
+        System.out.println("Connected Connections: " + this.Connections.size());
+        System.out.println("Connected Components: " + this.Components.size() );
         onExecute();
         for(Connection ct: Connections) {
             ct.refresh();
