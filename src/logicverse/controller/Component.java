@@ -70,4 +70,8 @@ public interface Component {
      * to Strings
      */
     public String toString();
+    /**
+     * Gets component id
+     */
+    public String getCid();
 }

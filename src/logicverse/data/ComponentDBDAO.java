@@ -79,11 +79,12 @@ public class ComponentDBDAO extends AbstractDBDAO {
     public ArrayList<Hashtable<String, String>> loadAll(Hashtable<String, String> params) {
         ArrayList<Hashtable<String, String>> data = new ArrayList<>();
 
-        String query = "select * from Component";
+        String query = "select * from Component where CIRid = ?;";
         try {
             Connection conn = getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
+            PreparedStatement stmt = conn.prepareStatement(query);        
+            stmt.setString(1,params.get("CIRid"));
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Hashtable<String, String> o = new Hashtable<>();
                 o.put("Cid", rs.getString("Cid"));
