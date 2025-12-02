@@ -17,11 +17,10 @@ import logicverse.controller.Drawable;
  *
  * @author Admin
  */
-public abstract class JEClickableComponent extends JComponent implements Drawable {
-    protected Component component;
-    
+public abstract class JEClickableComponent extends JEComponent {
+   
     public JEClickableComponent(Component obj) {
-        component = obj;
+        super(obj);
         this.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 component.click();
