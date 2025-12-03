@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import logicverse.Gates.controller.Switch;
 import logicverse.Gates.model.JEClickableComponent;
 import logicverse.Gates.model.JEDraggableComponent;
+import logicverse.controller.AbstractComponent;
 
 /**
  *
@@ -54,5 +55,7 @@ public class JESwitch extends JEClickableComponent {
         // Writing 1 and 0
         obj.drawString("0", 1, 3*y/4-1.5f);
         obj.drawString("1", 1, 7*y/4-1.5f);
+        
+        ((AbstractComponent)component).Outputs.get(0).setPosition(x+output, y);
     }
 }

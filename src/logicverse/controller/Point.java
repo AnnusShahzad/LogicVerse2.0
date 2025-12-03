@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.UUID;
 import logicverse.data.IDAO;
 import logicverse.data.PointDBDAO;
+import logicverse.model.Position;
 
 /**
  * Points used by Electrical Components (Input/Output)
@@ -30,6 +31,7 @@ public class Point {
      * The Boolean bit it has
      */
     boolean bit;
+    Position position;
     /**
      * Number of Other Points Connected
      * 0, If the Point is free (Not Connected).
@@ -59,12 +61,13 @@ public class Point {
      * @param degree Count of Components Point is Connected with
      * @param parent Component having Point
      */
-    public Point(String Pid, String name, boolean bit, int degree, Component parent) {
+    public Point(String Pid, String name, boolean bit, int degree, Component parent, Position pos) {
         this.Pid = Pid;
         this.name = parent.getName() + name;
         this.bit = bit;
         this.degree = degree;
         this.parent = parent;
+        this.position = pos;
     }
     
     /**
@@ -76,6 +79,7 @@ public class Point {
         this.Pid = UUID.randomUUID().toString();
         this.name = parent.getName() + name;
         this.parent = parent;
+        this.position = new Position();
     }
     /**
      * Gets the Unique Point ID
@@ -112,6 +116,17 @@ public class Point {
     public void set(Point point) {
         bit = point.get();
     }
+    public Position getPosition() {
+        return this.position;
+    }
+    public void setPosition(Position p) {
+        position.setX(p.getX());
+        position.setY(p.getY());
+    }
+    public void setPosition(int x, int y) {
+        position.setPosition(x, y);
+    }
+    
     /**
      * Responsible for Adding the Point Degree
      */
@@ -193,14 +208,14 @@ public class Point {
         params.put("type", Type);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
-            Point p = new Point(
-                d.get("Pid"),
-                d.get("Name"),
-                (Integer.valueOf(d.get("bit"))== 1)?true:false,
-                Integer.valueOf(d.get("degree")),
-                parent
-            );
-            res.add(p);
+//            Point p = new Point(
+//                d.get("Pid"),
+//                d.get("Name"),
+//                (Integer.valueOf(d.get("bit"))== 1)?true:false,
+//                Integer.valueOf(d.get("degree")),
+//                parent
+//            );
+//            res.add(p);
         }
         return res;
     }

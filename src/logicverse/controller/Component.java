@@ -4,6 +4,8 @@
  */
 package logicverse.controller;
 
+import logicverse.Gates.model.JEComponent;
+
 /**
  * Component is the Electrical Component on the Circuit Diagram
  * @author Admin
@@ -74,4 +76,14 @@ public interface Component {
      * Gets component id
      */
     public String getCid();
+    /**
+     * Gets the Container of the Component that houses it
+     * @return JEComponent that houses the Container
+     */
+    public JEComponent getContainer();
+    /**
+     * Sets the Component Container
+     * @param c Component Container
+     */
+    public void setContainer(JEComponent c);
 }

@@ -8,10 +8,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import logicverse.Gates.model.JEComponent;
-import logicverse.controller.Component;
 import logicverse.Gates.controller.AND;
 import logicverse.Gates.model.JEDraggableComponent;
+import logicverse.controller.AbstractComponent;
+import logicverse.controller.Connection;
+import logicverse.model.Position;
 
 /**
  *
@@ -51,5 +52,21 @@ public class JEAND extends JEDraggableComponent {
         obj.drawLine(disp_x+l, 15*h/20, disp_x+l+27, 15*h/20); // Top Bar 
         obj.drawArc(disp_x+l, 5*h/20, l+35, l+35, -90, 180); // Bell TOp Curve
         obj.drawLine(disp_x+l+55, cy, disp_x+l+55+l, cy); // Bell Output
+        
+        ((AbstractComponent)component).Inputs.get(0).setPosition(disp_x, 2*h/5);
+        ((AbstractComponent)component).Inputs.get(1).setPosition(disp_x, 3*h/5);
+        ((AbstractComponent)component).Outputs.get(0).setPosition(disp_x+l+55+l, cy);
+        
+        for(Connection c: ((AbstractComponent)component).Connections) {
+            Position s = c.Input.getPosition();
+            Position e = c.Output.getPosition();
+            int sx = s.getX();
+            int sy = s.getY();
+            int ex = e.getX();
+            int ey = e.getY();
+            obj.drawLine(sx, sy, ex, ey);
+        }
+        revalidate();
+        repaint();
     }
 }
