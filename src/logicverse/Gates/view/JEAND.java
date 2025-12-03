@@ -60,17 +60,5 @@ public class JEAND extends JEDraggableComponent {
         
         obj.setFont(new Font("Arial", Font.PLAIN, 11));
         obj.drawString(component.getName(), cx-(component.getName().length()*4.5f), cy+3);
-        
-        for(Connection c: ((AbstractComponent)component).Connections) {
-            Position s = c.Input.getPosition();
-            Position e = c.Output.getPosition();
-            int sx = s.getX();
-            int sy = s.getY();
-            int ex = e.getX();
-            int ey = e.getY();
-            obj.drawLine(sx, sy, ex, ey);
-        }
-        revalidate();
-        repaint();
     }
 }

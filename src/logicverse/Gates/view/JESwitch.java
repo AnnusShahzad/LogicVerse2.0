@@ -6,6 +6,7 @@ package logicverse.Gates.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import logicverse.Gates.controller.Switch;
@@ -58,6 +59,7 @@ public class JESwitch extends JEClickableComponent {
         
         ((AbstractComponent)component).Outputs.get(0).setPosition(x+output, y);
         
+        obj.setFont(new Font("Arial", Font.PLAIN, 9));
         obj.drawString(component.getName(), x, y-2);
     }
 }
