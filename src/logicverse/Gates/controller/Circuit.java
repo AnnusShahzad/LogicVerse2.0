@@ -52,6 +52,11 @@ public class Circuit {
         Components = new ArrayList<>();
     }
     
+    public Circuit(String ID){
+        this.ID = ID;
+        load();
+    }
+    
     
     
     /**
@@ -115,6 +120,24 @@ public class Circuit {
     }
         // dao funcitons
     /**
+     * load a Circuit Compoents from db based on its ID
+     * @return Boolean
+     */
+     public boolean load(){
+        
+        Hashtable<String,String> params = new Hashtable<>();
+        params.put("CIRid", ID);
+        Hashtable<String,String> data = dao.load(params);
+        if (data == null || data.isEmpty()){
+            return false;
+        }
+        this.Name = data.get("Name");
+        Components = AbstractComponent.loadAll(ID);
+        // load component associations
+        AbstractComponent.loadAllCmpntsAssociation(Components);
+        return true;
+    }
+    /**
      * Delete a Circuit
      * @return Boolean
      */
@@ -131,9 +154,16 @@ public class Circuit {
         Hashtable<String,String> data = new Hashtable<>();
         data.put("CIRid",this.ID);
         data.put("Name",this.Name);
-        
-        
-        return dao.save(data);
+        return (dao.save(data) && saveComponents());
+    }
+    /**
+     * save all components of circuit in database
+     * @return Boolean (true if all saved)
+     */
+    public boolean saveComponents(){
+        for(Component c : Components)
+            if(!c.save(ID)) return false;
+        return true;
     }
     /**
      * Get all Circuits

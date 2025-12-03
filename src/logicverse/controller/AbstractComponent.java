@@ -13,8 +13,10 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.Gates.controller.AND;
+import logicverse.Gates.controller.Circuit;
 import logicverse.Gates.controller.NOT;
 import logicverse.Gates.controller.OR;
+import logicverse.Gates.controller.Probe;
 import logicverse.Gates.controller.Switch;
 import logicverse.data.ComponentDBDAO;
 import logicverse.data.IDAO;
@@ -220,19 +222,32 @@ public abstract class AbstractComponent implements Component {
         return dao.delete(params);
     }
     /**
-     * Save a Componnet
-     * @param type type of point of component (Input,Output)
-     * @return Boolean
+     * Save a Component
+     * @return Boolean (true if Component is saved correctly)
      */
-    public boolean save(){
+    public boolean save(String CIRid){
         Hashtable<String,String> data = new Hashtable<>();
         data.put("Cid",this.Cid);
+        data.put("CIRid", CIRid);
         data.put("Name",this.name);
         data.put("internalName",this.internalName);
         data.put("PosX",String.valueOf(this.Location.getX()));
         data.put("PosY",String.valueOf(this.Location.getY()));
         
-        return dao.save(data);
+        return (dao.save(data) && saveAttribues());
+    }
+    /**
+     * save attributes of a Component
+     * @return Boolean (false if any attribute is not saved)
+     */
+    public boolean saveAttribues(){
+        for(Point i : Inputs)
+            if(!i.save("Input")) return false;
+        for(Point o : Outputs)
+            if(!o.save("Output")) return false;
+        for(Connection conn: Connections)
+            if(!conn.save()) return false;
+        return saveAssociatedComponents();
     }
     /**
      * Get all Componnets inside a Circuit
@@ -262,11 +277,41 @@ public abstract class AbstractComponent implements Component {
                     c =  new Switch(loc,d.get("Cid"),d.get("Name"),d.get("internalName"),d.get("clicked").equals(1));
                     break;
                 default:
-                    c =  new AND(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
-                    
+                    c =  new Probe(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                res.add(c);
             }
         }
         return res;
     }
-     
+    
+    /**
+     * load all components association refrence with other Component
+     * in each Component of a circuit;
+     * @param Components  
+     */
+    public static void loadAllCmpntsAssociation(ArrayList<Component> Components){
+        // genrating hash map of components for last retival later
+        Hashtable<String,Component> list = new Hashtable<>();
+        for(Component c: Components)
+            list.put(c.getCid(), c);
+        ComponentDBDAO dbdao = (ComponentDBDAO)dao;
+        for(Component c: Components){
+            AbstractComponent ac = (AbstractComponent)c;
+            ArrayList<String> res = dbdao.loadAllAssociatedComponents(c.getCid());
+            for(String cid : res){
+                if(list.containsKey(cid))
+                    ac.Components.add(list.get(cid));
+            }
+                
+        }
+    }
+    
+    private boolean saveAssociatedComponents(){
+        ArrayList<String> AsCids = new ArrayList<>();
+        ComponentDBDAO dbdao = (ComponentDBDAO)dao;
+        for(Component c : Components)
+            AsCids.add(c.getCid());
+        return dbdao.saveAssociations(Cid, AsCids);
+    }
+    
 }

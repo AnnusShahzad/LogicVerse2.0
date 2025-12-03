@@ -74,4 +74,16 @@ public interface Component {
      * Gets component id
      */
     public String getCid();
+    // dao funcitons
+    /**
+     * Delete a Component
+     * @return Boolean
+     */
+    public boolean delete();
+    /**
+     * Save a Component
+     * @param CIRid id of circuit to which this component belong
+     * @return Boolean (true if Component is saved correctly)
+     */
+    public boolean save(String CIRid);
 }
