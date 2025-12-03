@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package logicverse.controller;
+import java.util.Hashtable;
 import logicverse.model.Position;
 
 /**
@@ -32,5 +33,22 @@ public abstract class ClickableComponent extends AbstractComponent {
         clicked = !clicked;
         onClick();
         execute();
+    }
+    
+        /**
+     * Save a clickable Component
+     * @return Boolean (true if Component is saved correctly)
+     */
+    public boolean save(String CIRid){
+        Hashtable<String,String> data = new Hashtable<>();
+        data.put("Cid",this.Cid);
+        data.put("CIRid", CIRid);
+        data.put("Name",this.name);
+        data.put("internalName",this.internalName);
+        data.put("PosX",String.valueOf(this.Location.getX()));
+        data.put("PosY",String.valueOf(this.Location.getY()));
+        data.put("clicked", (clicked)?"1":"0");
+        
+        return (dao.save(data) && saveAttribues());
     }
 }
