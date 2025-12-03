@@ -8,6 +8,7 @@ import logicverse.controller.AbstractComponent;
 import logicverse.controller.Connection;
 import logicverse.controller.Drawable;
 import logicverse.controller.Point;
+import logicverse.model.Position;
 
 /**
  *
@@ -21,6 +22,14 @@ public class Probe extends AbstractComponent {
         Inputs.add(new Point("X1", this));
 //        incrementCount(this.getClass());
     }
+
+    public Probe(Position Location, String Cid, String name, String internalName) {
+        super(Location, Cid, name, internalName);
+        shortName = "PRB";
+    }
+    
+    
+    
     public void onExecute() {
         // do Nothing
     }

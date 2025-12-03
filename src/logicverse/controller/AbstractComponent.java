@@ -12,6 +12,10 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import logicverse.Gates.controller.AND;
+import logicverse.Gates.controller.NOT;
+import logicverse.Gates.controller.OR;
+import logicverse.Gates.controller.Probe;
+import logicverse.Gates.controller.Switch;
 import logicverse.Gates.model.JEComponent;
 import logicverse.data.ComponentDBDAO;
 import logicverse.data.IDAO;
@@ -51,7 +55,7 @@ public abstract class AbstractComponent implements Component {
      * Data Access Object
      * Used for Managing related attributes
      */
-    private static final IDAO dao = new ComponentDBDAO();
+    protected static final IDAO dao = new ComponentDBDAO();
     /**
      * Component Unique ID
      * Used for Storing and Retrieving from DAO
@@ -102,37 +106,18 @@ public abstract class AbstractComponent implements Component {
         Components = new ArrayList<>();
         container = null;
     }
-    /**
-     * Parameterized Constructor with Container provided
-     * @param cont Container housing the Component
-     */
-    public AbstractComponent(JEComponent cont) {
-        Cid = UUID.randomUUID().toString();
-        Inputs = new ArrayList<>();
-        Outputs = new ArrayList<>();
-        Location = new Position();
-        Connections = new ArrayList<>();
-        Components = new ArrayList<>();
-        container = cont;
-    }
-    /**
-     * Parameterized Constructor with ComponentID, Container provided
-     * @param Cid Component ID
-     * @param cont Container housing the Component 
-     */
-    public AbstractComponent(String Cid, JEComponent cont){
+
+    public AbstractComponent( Position Location, String Cid, String name, String internalName) {
+        this.Location = Location;
         this.Cid = Cid;
-        Inputs = new ArrayList<>();
-        Outputs = new ArrayList<>();
-        Location = new Position();
-        Connections = new ArrayList<>();
-        Components = new ArrayList<>();
-        container = cont;
+        this.name = name;
+        this.internalName = internalName;
+        this.Inputs = Point.loadAll(this, "Input");
+        this.Outputs = Point.loadAll(this, "Output");
+        this.Components = new ArrayList<>();
+        this.Connections = Connection.loadAll(this);
     }
-    /**
-     * Increments the Count of Component Used
-     * Used for Generating Unique Names
-     */
+    
     public void incrementCount() {
         counters.put(this.getClass(), counters.getOrDefault(this.getClass(), 0) + 1);
     }
@@ -390,18 +375,32 @@ public abstract class AbstractComponent implements Component {
         return dao.delete(params);
     }
     /**
-     * Saves a Componnet
-     * @return Boolean True If Saved, False Otherwise
+     * Save a Component
+     * @return Boolean (true if Component is saved correctly)
      */
-    public boolean save(){
+    public boolean save(String CIRid){
         Hashtable<String,String> data = new Hashtable<>();
         data.put("Cid",this.Cid);
+        data.put("CIRid", CIRid);
         data.put("Name",this.name);
         data.put("internalName",this.internalName);
         data.put("PosX",String.valueOf(this.Location.getX()));
         data.put("PosY",String.valueOf(this.Location.getY()));
         
-        return dao.save(data);
+        return (dao.save(data) && saveAttribues());
+    }
+    /**
+     * save attributes of a Component
+     * @return Boolean (false if any attribute is not saved)
+     */
+    public boolean saveAttribues(){
+        for(Point i : Inputs)
+            if(!i.save("Input")) return false;
+        for(Point o : Outputs)
+            if(!o.save("Output")) return false;
+        for(Connection conn: Connections)
+            if(!conn.save()) return false;
+        return saveAssociatedComponents();
     }
     /**
      * Get all Componnets inside a Circuit
@@ -411,12 +410,62 @@ public abstract class AbstractComponent implements Component {
     public static ArrayList<Component> loadAll(String circuitId){
         ArrayList<Component> res = new ArrayList<>();
         Hashtable<String,String> params = new Hashtable<>();
-        params.put("Cid", circuitId);
+        params.put("CIRid", circuitId);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
-//            res.add(new AND());
+            Component c;
+            Position loc = new Position(Integer.valueOf(d.get("PosX")),Integer.valueOf(d.get("PosY")));
+            switch(d.get("internalName")){
+                case "AND":
+                    // Position Location, String Cid, String name, String internalName
+                    c =  new AND(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "OR":
+                    c =  new OR(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "NOT":
+                    c =  new NOT(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+                    break;
+                case "Binary Switch":
+                    c =  new Switch(loc,d.get("Cid"),d.get("Name"),d.get("internalName"),d.get("clicked").equals(1));
+                    break;
+                default:
+                    c =  new Probe(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
+            }
+            res.add(c);
+            System.out.println(c.getCid());
         }
         return res;
     }
-     
+    
+    /**
+     * load all components association refrence with other Component
+     * in each Component of a circuit;
+     * @param Components  
+     */
+    public static void loadAllCmpntsAssociation(ArrayList<Component> Components){
+        // genrating hash map of components for last retival later
+        Hashtable<String,Component> list = new Hashtable<>();
+        for(Component c: Components)
+            list.put(c.getCid(), c);
+        ComponentDBDAO dbdao = (ComponentDBDAO)dao;
+        for(Component c: Components){
+            AbstractComponent ac = (AbstractComponent)c;
+            ArrayList<String> res = dbdao.loadAllAssociatedComponents(c.getCid());
+            for(String cid : res){
+                if(list.containsKey(cid))
+                    ac.Components.add(list.get(cid));
+            }
+                
+        }
+    }
+    
+    private boolean saveAssociatedComponents(){
+        ArrayList<String> AsCids = new ArrayList<>();
+        ComponentDBDAO dbdao = (ComponentDBDAO)dao;
+        for(Component c : Components)
+            AsCids.add(c.getCid());
+        return dbdao.saveAssociations(Cid, AsCids);
+    }
+    
 }
