@@ -10,13 +10,25 @@ import java.awt.event.MouseEvent;
 import logicverse.controller.Component;
 
 /**
- *
+ * Draggable Extension of the JEComponent
+ * Allows the JEComponent to Dragged
  * @author Admin
  */
 public abstract class JEDraggableComponent extends JEComponent {
+    /**
+     * Point relative to Screen
+     */
     private Point scr;
+    /**
+     * Point relative to itself
+     */
     private Point rel;
     
+    /**
+     * Default Constructor
+     * Initializes relevant attributes and components
+     * @param obj Component Object to associate
+     */
     public JEDraggableComponent(Component obj) {
         super(obj);
         scr = new Point();

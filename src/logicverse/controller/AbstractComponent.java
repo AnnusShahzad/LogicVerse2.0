@@ -19,7 +19,7 @@ import logicverse.model.Position;
 
 /**
  * Abstract Implementation of Component Interface
- * Overridden by Other Classes for further processing
+ * Overridden by Other Classes for further operations
  * @author Admin
  */
 public abstract class AbstractComponent implements Component {
@@ -391,7 +391,6 @@ public abstract class AbstractComponent implements Component {
     }
     /**
      * Saves a Componnet
-     * @param type type of point of component (Input,Output)
      * @return Boolean True If Saved, False Otherwise
      */
     public boolean save(){
