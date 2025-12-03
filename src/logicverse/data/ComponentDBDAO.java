@@ -97,7 +97,8 @@ public class ComponentDBDAO extends AbstractDBDAO {
                 o.put("internalName", rs.getString("internalName"));
                 o.put("PosX", String.valueOf(rs.getString("PosX")));
                 o.put("PosY", String.valueOf(rs.getString("PosY")));
-                o.put("clicked", rs.getString("clicked"));
+                if(rs.getString("clicked") != null)
+                    o.put("clicked", rs.getString("clicked"));
                 data.add(o);
             }
         } catch (SQLException ex) {

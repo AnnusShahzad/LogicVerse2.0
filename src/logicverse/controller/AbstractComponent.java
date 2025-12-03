@@ -58,12 +58,14 @@ public abstract class AbstractComponent implements Component {
     }
 
     public AbstractComponent( Position Location, String Cid, String name, String internalName) {
-        this.Inputs = Point.loadAll(this, "Input");
-        this.Outputs = Point.loadAll(this, "Output");
         this.Location = Location;
         this.Cid = Cid;
         this.name = name;
         this.internalName = internalName;
+        this.Inputs = Point.loadAll(this, "Input");
+        this.Outputs = Point.loadAll(this, "Output");
+        this.Components = new ArrayList<>();
+        this.Connections = Connection.loadAll(this);
     }
     
     public void incrementCount() {
@@ -257,7 +259,7 @@ public abstract class AbstractComponent implements Component {
     public static ArrayList<Component> loadAll(String circuitId){
         ArrayList<Component> res = new ArrayList<>();
         Hashtable<String,String> params = new Hashtable<>();
-        params.put("Cid", circuitId);
+        params.put("CIRid", circuitId);
         ArrayList<Hashtable<String,String>> data = dao.loadAll(params);
         for(Hashtable<String,String> d : data){
             Component c;
@@ -278,8 +280,9 @@ public abstract class AbstractComponent implements Component {
                     break;
                 default:
                     c =  new Probe(loc,d.get("Cid"),d.get("Name"),d.get("internalName"));
-                res.add(c);
             }
+            res.add(c);
+            System.out.println(c.getCid());
         }
         return res;
     }
