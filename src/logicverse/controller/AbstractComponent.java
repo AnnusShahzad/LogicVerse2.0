@@ -297,9 +297,9 @@ public abstract class AbstractComponent implements Component {
      */
     public void setOutputBit(int o, boolean bit) {
         if (o >= Outputs.size()) {
-            throw new IndexOutOfBoundsException("There's no " + i + "th Output in the Array");
+            throw new IndexOutOfBoundsException("There's no " + o + "th Output in the Array");
         }
-        Outputs.get(i).set(bit);
+        Outputs.get(o).set(bit);
     }
     
     /**
